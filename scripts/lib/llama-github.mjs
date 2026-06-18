@@ -2,7 +2,7 @@
  * GitHub API + source download for ggml-org/llama.cpp
  */
 import { execSync } from 'node:child_process'
-import { createWriteStream, existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'node:fs'
+import { cpSync, createWriteStream, existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { dirname, join } from 'node:path'
 import { pipeline } from 'node:stream/promises'
@@ -353,10 +353,15 @@ function unzip(zipPath, destDir) {
 }
 
 function cpTree(src, dest) {
-  mkdirSync(dest, { recursive: true })
-  if (process.platform === 'win32') {
-    execSync(`xcopy "${src}" "${dest}" /E /I /Y /Q`, { stdio: 'ignore' })
-  } else {
-    execSync(`cp -a "${src}/." "${dest}"`, { stdio: 'inherit' })
+  if (!existsSync(src)) {
+    throw new Error(`cpTree: source missing: ${src}`)
+  }
+  if (existsSync(dest)) rmSync(dest, { recursive: true, force: true })
+  mkdirSync(dirname(dest), { recursive: true })
+  try {
+    cpSync(src, dest, { recursive: true, force: true })
+  } catch (err) {
+    const msg = err instanceof Error ? err.message : String(err)
+    throw new Error(`Failed to copy llama.cpp source tree to ${dest}: ${msg}`)
   }
 }
