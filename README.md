@@ -8,6 +8,14 @@ Your machine. Your models. One app.
 
 Omega is a desktop AI workspace: choose, download, run!
 
+AI was used to help in this project.
+
+this was made by one dude with a estupid AI that broke everything it was suposed to help fix xD ... Contain lots of bugs that i didnt face them yet to know they exist to eventualy fix them..
+
+
+Fork it , build on it, make your own improved version. thats the point of all of this.
+
+
 **Omega v2** ships as a **native desktop app** (WebView2 / WKWebView / WebKitGTK) with a **C++ runtime** — no Electron at install time. See [docs/OMEGA-V2.md](docs/OMEGA-V2.md).
 
 
@@ -76,12 +84,6 @@ After all models existe localy and are set as defaults, omega will be able to ma
 
 ---
 
-AI was used to help in this project.
-
-this was made by one dude with a estupid AI that broke everything it was suposed to help fix xD ... Contain lots of bugs that i didnt face them yet to know they exist to eventualy fix them..
-
-
-Fork it , build on it, make your own improved version. thats the point of all of this.
 
 
 ## Built on
