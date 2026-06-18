@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "youtube-localgen"
+version = "0.1.0"
+description = "Local TTS and text-to-image helpers for YouTube automation"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "huggingface_hub>=0.24.0",
+    "numpy>=1.26.0",
+    "soundfile>=0.12.0",
+    "Pillow>=10.0.0",
+]
+
+[project.optional-dependencies]
+tts = ["torch", "qwen-tts"]
+tts-piper = ["piper-tts"]
+tts-xtts = ["TTS"]
+image = ["torch", "diffusers", "transformers", "accelerate", "safetensors", "sentencepiece"]
+video = ["torch", "diffusers", "transformers", "accelerate", "safetensors", "sentencepiece", "imageio>=2.34", "imageio-ffmpeg>=0.5.1", "opencv-python-headless>=4.8.0"]
+gui = ["PyQt6", "pygame"]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["localgen*"]

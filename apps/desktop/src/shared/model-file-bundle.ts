@@ -1,0 +1,27 @@
+/** Re-export HF bundle helpers from @omega/sdk (Phase 10). */
+export {
+  chatQuantPresets,
+  estimateContentStudioSnapshotBytes,
+  fileRole,
+  inferContentStudioKind,
+  inferOnnxRepoKind,
+  isContentStudioSnapshotRepo,
+  isMmprojGgufPath,
+  isOnnxEmbeddingRepo,
+  isOnnxGenaiChatRepo,
+  isOnnxMultimodalRepo,
+  isOnnxSpeechRepo,
+  isOnnxVisionEncoderRepo,
+  isVisionModelRepo,
+  pickPrimaryGgufFile,
+  pickPrimaryGenaiConfigPath,
+  pickPrimaryOnnxFile,
+  pickVisionProjectorFile,
+  resolveOnnxGenaiPaths,
+  resolveReadyGgufPaths,
+  sumFileBytes,
+  type ContentStudioKind,
+  type ModelFileRole,
+  type OnnxRepoKind,
+  type QuantPreset
+} from '@omega/sdk'

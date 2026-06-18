@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "strict": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "outDir": "out",
+    "types": ["node"],
+    "paths": { "@omega/sdk": ["../../packages/sdk/src"] }
+  },
+  "include": ["src/shared/**/*", "vite.native.config.ts"]
+}

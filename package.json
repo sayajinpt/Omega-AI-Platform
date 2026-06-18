@@ -1,0 +1,48 @@
+{
+  "name": "omega",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Omega — a single-system local AI operating system. Inference engine, agent runtime, memory, tools, API, and UI in one unified app.",
+  "license": "Apache-2.0",
+  "workspaces": [
+    "apps/desktop",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "node scripts/dev-native.mjs",
+    "build": "npm run -w packages/sdk build && npm run build:ui",
+    "build:win": "npm run -w packages/sdk build && npm run build:win-native",
+    "build:win-native": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/build-windows-native.ps1",
+    "build:mac": "npm run -w packages/sdk build && npm run build:ui && bash scripts/build-macos-native.sh",
+    "build:linux": "npm run -w packages/sdk build && npm run build:ui && bash scripts/build-linux-native.sh",
+    "setup:llama": "node scripts/llama-setup.mjs",
+    "fetch:infer": "node scripts/fetch-infer-binaries.mjs",
+    "fetch:infer:all": "node scripts/fetch-infer-binaries.mjs --all-host-variants",
+    "fetch:infer:catalog": "node scripts/fetch-infer-binaries.mjs --catalog-only",
+    "test:scripts": "node --test scripts/lib/*.test.mjs",
+    "prebuild:linux": "node scripts/prebuild-llama.mjs",
+    "prebuild:mac": "node scripts/sync-llama-cpp.mjs && npm run fetch:infer && node scripts/build-engine.mjs",
+    "prebuild:win": "node scripts/prebuild-llama.mjs",
+    "build:native": "powershell -ExecutionPolicy Bypass -File scripts/build-native.ps1",
+    "build:runtime": "node scripts/build-runtime.mjs",
+    "build:ui": "npm run -w packages/sdk build && npm run -w @omega/desktop build:ui",
+    "prebuild:shell": "node scripts/ensure-content-studio.mjs && node scripts/ensure-claw3d-office.mjs",
+    "build:shell": "npm run build:runtime && npm run build:ui && node scripts/build-desktop-shell.mjs && node scripts/package-native-shell.mjs",
+    "package:appimage": "node scripts/package-appimage.mjs",
+    "package:dmg": "node scripts/package-dmg.mjs",
+    "dev:shell": "npm run dev",
+    "generate:route-catalog": "node scripts/generate-route-catalog.mjs",
+    "sync:llama-cpp": "node scripts/sync-llama-cpp.mjs",
+    "sync:llama-cpp:github": "node scripts/sync-llama-cpp.mjs --fetch",
+    "typecheck": "npm run -w packages/sdk typecheck && npm run -w apps/desktop typecheck",
+    "lint": "npm run -w apps/desktop lint",
+    "test": "npm run -w apps/desktop test",
+    "clean": "node scripts/clean.mjs",
+    "clean:fresh": "node scripts/clean-fresh.mjs",
+    "clean:install": "node scripts/clean-install.mjs",
+    "setup:sidecar": "node scripts/setup-sidecar-engines.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

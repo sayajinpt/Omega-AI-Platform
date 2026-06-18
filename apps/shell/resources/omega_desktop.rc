@@ -1,0 +1,7 @@
+#include "winuser.h"
+
+#ifndef IDI_ICON1
+#define IDI_ICON1 101
+#endif
+
+IDI_ICON1 ICON "../../desktop/resources/icon.ico"

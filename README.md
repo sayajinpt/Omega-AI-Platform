@@ -117,6 +117,8 @@ License: [Apache-2.0](LICENSE)
 
 ---
 
+---
+
 <img width="1527" height="1112" alt="Captura de ecrã 2026-06-10 160444" src="https://github.com/user-attachments/assets/c13fa5b4-097e-46d8-89e0-ad81d7df20cd" />
 
 <img width="1832" height="1291" alt="Captura de ecrã 2026-06-18 161227" src="https://github.com/user-attachments/assets/9afbe28c-ea85-4161-95c0-fc7b6c09f4b1" />
@@ -148,7 +150,6 @@ License: [Apache-2.0](LICENSE)
 <img width="1785" height="1132" alt="v1_ui (4)" src="https://github.com/user-attachments/assets/30500a82-d79b-41a9-8fd9-84dcd3c5f23c" />
 
 <img width="1833" height="1291" alt="Captura de ecrã 2026-06-18 161305" src="https://github.com/user-attachments/assets/d058d03e-9fd7-46bc-a465-bdb8f11e314a" />
-
 
 
 
@@ -371,4 +372,4 @@ Apache-2.0 — see [LICENSE](LICENSE).
 
 
 ## If u see this project useful for u , consider buying me a cofee.
- - PAYPAL - @alexandrepassarinho <img width="1527" height="1112" alt="Captura de ecrã 2026-06-10 160444" src="https://github.com/user-attachments/assets/002533af-4ca4-4f22-b2d1-83567a5916a9" />
+ - PAYPAL - @alexandrepassarinho

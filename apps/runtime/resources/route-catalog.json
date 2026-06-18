@@ -1,0 +1,4628 @@
+{
+  "version": 1,
+  "generated_at": "2026-06-18T14:27:08.756Z",
+  "summary": {
+    "total": 327,
+    "native": 326,
+    "engine_bridge": 0,
+    "electron": 1,
+    "websocket": 0,
+    "by_target": {
+      "cxx": 268,
+      "python": 57,
+      "ws": 2
+    }
+  },
+  "routes": [
+    {
+      "key": "healthz",
+      "ipc": null,
+      "domain": "runtime",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "GET",
+        "path": "/healthz"
+      },
+      "ws": null
+    },
+    {
+      "key": "runtimeInfo",
+      "ipc": null,
+      "domain": "runtime",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "GET",
+        "path": "/v1/runtime/info"
+      },
+      "ws": null
+    },
+    {
+      "key": "runtimeRoutes",
+      "ipc": null,
+      "domain": "runtime",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "GET",
+        "path": "/v1/runtime/routes"
+      },
+      "ws": null
+    },
+    {
+      "key": "engineCommand",
+      "ipc": "omega:engine:command",
+      "domain": "models",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/engine/command"
+      },
+      "ws": null
+    },
+    {
+      "key": "inferenceMediaCapabilities",
+      "ipc": "omega:inference:media:capabilities",
+      "domain": "models",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "GET",
+        "path": "/v1/inference/media/capabilities"
+      },
+      "ws": null
+    },
+    {
+      "key": "inferenceMediaImage",
+      "ipc": "omega:inference:media:image",
+      "domain": "models",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/inference/media/image"
+      },
+      "ws": null
+    },
+    {
+      "key": "inferenceMediaTts",
+      "ipc": "omega:inference:media:tts",
+      "domain": "models",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/inference/media/tts"
+      },
+      "ws": null
+    },
+    {
+      "key": "contentStudioNativeRender",
+      "ipc": "omega:content-studio:native:render",
+      "domain": "content_studio",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/content-studio/native/render"
+      },
+      "ws": null
+    },
+    {
+      "key": "configGet",
+      "ipc": "omega:config:get",
+      "domain": "other",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": "config.get",
+      "http": {
+        "method": "GET",
+        "path": "/v1/config",
+        "engine": "config.get"
+      },
+      "ws": null
+    },
+    {
+      "key": "configSet",
+      "ipc": "omega:config:set",
+      "domain": "other",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": "config.set",
+      "http": {
+        "method": "PATCH",
+        "path": "/v1/config",
+        "engine": "config.set"
+      },
+      "ws": null
+    },
+    {
+      "key": "modelConfigGet",
+      "ipc": "omega:model-config:get",
+      "domain": "models",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "GET",
+        "path": "/v1/model-config/get"
+      },
+      "ws": null
+    },
+    {
+      "key": "modelConfigReset",
+      "ipc": "omega:model-config:reset",
+      "domain": "models",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "DELETE",
+        "path": "/v1/model-config/reset"
+      },
+      "ws": null
+    },
+    {
+      "key": "modelConfigSet",
+      "ipc": "omega:model-config:set",
+      "domain": "models",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/model-config/set"
+      },
+      "ws": null
+    },
+    {
+      "key": "modelConfigList",
+      "ipc": "omega:model-config:list",
+      "domain": "models",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "GET",
+        "path": "/v1/model-config/list"
+      },
+      "ws": null
+    },
+    {
+      "key": "modelPresetsList",
+      "ipc": "omega:model-presets:list",
+      "domain": "models",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "GET",
+        "path": "/v1/model-presets/list"
+      },
+      "ws": null
+    },
+    {
+      "key": "modelPresetsApply",
+      "ipc": "omega:model-presets:apply",
+      "domain": "models",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/model-presets/apply"
+      },
+      "ws": null
+    },
+    {
+      "key": "runtimeStatus",
+      "ipc": "omega:runtime:status",
+      "domain": "other",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "GET",
+        "path": "/v1/runtime/status"
+      },
+      "ws": null
+    },
+    {
+      "key": "runtimeStatusChanged",
+      "ipc": "omega:runtime:status-changed",
+      "domain": "other",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/runtime/status-changed"
+      },
+      "ws": null
+    },
+    {
+      "key": "systemInfo",
+      "ipc": "omega:system:info",
+      "domain": "other",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "GET",
+        "path": "/v1/system/info"
+      },
+      "ws": null
+    },
+    {
+      "key": "modelsList",
+      "ipc": "omega:models:list",
+      "domain": "models",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": "model.list",
+      "http": {
+        "method": "GET",
+        "path": "/v1/models",
+        "engine": "model.list"
+      },
+      "ws": null
+    },
+    {
+      "key": "modelsUnload",
+      "ipc": "omega:models:unload",
+      "domain": "models",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": "model.unload",
+      "http": {
+        "method": "POST",
+        "path": "/v1/models/unload",
+        "engine": "model.unload"
+      },
+      "ws": null
+    },
+    {
+      "key": "modelsLoad",
+      "ipc": "omega:models:load",
+      "domain": "models",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": "model.load",
+      "http": {
+        "method": "POST",
+        "path": "/v1/models/load",
+        "engine": "model.load"
+      },
+      "ws": null
+    },
+    {
+      "key": "modelsLoadProgress",
+      "ipc": "omega:models:load-progress",
+      "domain": "models",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/models/load-progress"
+      },
+      "ws": null
+    },
+    {
+      "key": "modelsDelete",
+      "ipc": "omega:models:delete",
+      "domain": "models",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": "model.delete",
+      "http": {
+        "method": "DELETE",
+        "path": "/v1/models/{modelId}",
+        "engine": "model.delete"
+      },
+      "ws": null
+    },
+    {
+      "key": "modelsQuantize",
+      "ipc": "omega:models:quantize",
+      "domain": "models",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/models/quantize"
+      },
+      "ws": null
+    },
+    {
+      "key": "quantizeProgress",
+      "ipc": "omega:quantize:progress",
+      "domain": "other",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/quantize/progress"
+      },
+      "ws": null
+    },
+    {
+      "key": "chatSend",
+      "ipc": "omega:chat:send",
+      "domain": "chat",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": "chat.send",
+      "http": {
+        "method": "POST",
+        "path": "/v1/chat/send",
+        "engine": "chat.send"
+      },
+      "ws": null
+    },
+    {
+      "key": "chatAbort",
+      "ipc": "omega:chat:abort",
+      "domain": "chat",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": "chat.abort",
+      "http": {
+        "method": "DELETE",
+        "path": "/v1/chat/abort",
+        "engine": "chat.abort"
+      },
+      "ws": null
+    },
+    {
+      "key": "chatPickAttachments",
+      "ipc": "omega:chat:pick-attachments",
+      "domain": "chat",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/chat/pick-attachments"
+      },
+      "ws": null
+    },
+    {
+      "key": "chatStageAttachment",
+      "ipc": "omega:chat:stage-attachment",
+      "domain": "chat",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/chat/stage-attachment"
+      },
+      "ws": null
+    },
+    {
+      "key": "chatAttachmentLimits",
+      "ipc": "omega:chat:attachment-limits",
+      "domain": "chat",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/chat/attachment-limits"
+      },
+      "ws": null
+    },
+    {
+      "key": "terminalHistory",
+      "ipc": "omega:terminal:history",
+      "domain": "other",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "GET",
+        "path": "/v1/terminal/history"
+      },
+      "ws": null
+    },
+    {
+      "key": "terminalClear",
+      "ipc": "omega:terminal:clear",
+      "domain": "other",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "DELETE",
+        "path": "/v1/terminal/clear"
+      },
+      "ws": null
+    },
+    {
+      "key": "terminalRunSnippet",
+      "ipc": "omega:terminal:runSnippet",
+      "domain": "other",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/terminal/runSnippet"
+      },
+      "ws": null
+    },
+    {
+      "key": "terminalSaveSnippet",
+      "ipc": "omega:terminal:saveSnippet",
+      "domain": "other",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/terminal/saveSnippet"
+      },
+      "ws": null
+    },
+    {
+      "key": "terminalLine",
+      "ipc": "omega:terminal:line",
+      "domain": "other",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/terminal/line"
+      },
+      "ws": null
+    },
+    {
+      "key": "editorRead",
+      "ipc": "omega:editor:read",
+      "domain": "other",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/editor/read"
+      },
+      "ws": null
+    },
+    {
+      "key": "editorWrite",
+      "ipc": "omega:editor:write",
+      "domain": "other",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/editor/write"
+      },
+      "ws": null
+    },
+    {
+      "key": "editorOpenFiles",
+      "ipc": "omega:editor:openFiles",
+      "domain": "other",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/editor/openFiles"
+      },
+      "ws": null
+    },
+    {
+      "key": "editorSaveAs",
+      "ipc": "omega:editor:saveAs",
+      "domain": "other",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/editor/saveAs"
+      },
+      "ws": null
+    },
+    {
+      "key": "editorDeleteFile",
+      "ipc": "omega:editor:deleteFile",
+      "domain": "other",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/editor/deleteFile"
+      },
+      "ws": null
+    },
+    {
+      "key": "contextMenuFind",
+      "ipc": "omega:context:find",
+      "domain": "memory",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/context/find"
+      },
+      "ws": null
+    },
+    {
+      "key": "contextMenuGotoLine",
+      "ipc": "omega:context:gotoLine",
+      "domain": "memory",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/context/gotoLine"
+      },
+      "ws": null
+    },
+    {
+      "key": "generate",
+      "ipc": "omega:generate",
+      "domain": "other",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": "chat.generate",
+      "http": {
+        "method": "POST",
+        "path": "/v1//generate",
+        "engine": "chat.generate"
+      },
+      "ws": null
+    },
+    {
+      "key": "embed",
+      "ipc": "omega:embed",
+      "domain": "other",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": "chat.embed",
+      "http": {
+        "method": "POST",
+        "path": "/v1//embed",
+        "engine": "chat.embed"
+      },
+      "ws": null
+    },
+    {
+      "key": "agentRun",
+      "ipc": "omega:agent:run",
+      "domain": "chat",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": "agent.run",
+      "http": {
+        "method": "POST",
+        "path": "/v1/agent/run",
+        "engine": "agent.run"
+      },
+      "ws": null
+    },
+    {
+      "key": "agentAbort",
+      "ipc": "omega:agent:abort",
+      "domain": "chat",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": "agent.abort",
+      "http": {
+        "method": "DELETE",
+        "path": "/v1/agent/abort",
+        "engine": "agent.abort"
+      },
+      "ws": null
+    },
+    {
+      "key": "sessionsList",
+      "ipc": "omega:sessions:list",
+      "domain": "chat",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": "session.list",
+      "http": {
+        "method": "GET",
+        "path": "/v1/sessions/list",
+        "engine": "session.list"
+      },
+      "ws": null
+    },
+    {
+      "key": "sessionsCreate",
+      "ipc": "omega:sessions:create",
+      "domain": "chat",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": "session.create",
+      "http": {
+        "method": "POST",
+        "path": "/v1/sessions/create",
+        "engine": "session.create"
+      },
+      "ws": null
+    },
+    {
+      "key": "sessionsDelete",
+      "ipc": "omega:sessions:delete",
+      "domain": "chat",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": "session.delete",
+      "http": {
+        "method": "POST",
+        "path": "/v1/sessions/delete",
+        "engine": "session.delete"
+      },
+      "ws": null
+    },
+    {
+      "key": "sessionsUpdateTitle",
+      "ipc": "omega:sessions:updateTitle",
+      "domain": "chat",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/sessions/updateTitle"
+      },
+      "ws": null
+    },
+    {
+      "key": "sessionsUpdateModel",
+      "ipc": "omega:sessions:updateModel",
+      "domain": "chat",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/sessions/updateModel"
+      },
+      "ws": null
+    },
+    {
+      "key": "sessionsFork",
+      "ipc": "omega:sessions:fork",
+      "domain": "chat",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/sessions/fork"
+      },
+      "ws": null
+    },
+    {
+      "key": "sessionsTruncate",
+      "ipc": "omega:sessions:truncate",
+      "domain": "chat",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/sessions/truncate"
+      },
+      "ws": null
+    },
+    {
+      "key": "sessionsMessages",
+      "ipc": "omega:sessions:messages",
+      "domain": "chat",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": "session.messages",
+      "http": {
+        "method": "POST",
+        "path": "/v1/sessions/messages",
+        "engine": "session.messages"
+      },
+      "ws": null
+    },
+    {
+      "key": "sessionsSearch",
+      "ipc": "omega:sessions:search",
+      "domain": "chat",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "GET",
+        "path": "/v1/sessions/search"
+      },
+      "ws": null
+    },
+    {
+      "key": "usageSummary",
+      "ipc": "omega:usage:summary",
+      "domain": "other",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "GET",
+        "path": "/v1/usage/summary"
+      },
+      "ws": null
+    },
+    {
+      "key": "workforceAgents",
+      "ipc": "omega:workforce:agents",
+      "domain": "office",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "GET",
+        "path": "/v1/workforce/agents"
+      },
+      "ws": null
+    },
+    {
+      "key": "workforceRuns",
+      "ipc": "omega:workforce:runs",
+      "domain": "office",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "GET",
+        "path": "/v1/workforce/runs"
+      },
+      "ws": null
+    },
+    {
+      "key": "workforceDelegate",
+      "ipc": "omega:workforce:delegate",
+      "domain": "office",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/workforce/delegate"
+      },
+      "ws": null
+    },
+    {
+      "key": "workforceMoA",
+      "ipc": "omega:workforce:moa",
+      "domain": "office",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/workforce/moa"
+      },
+      "ws": null
+    },
+    {
+      "key": "workforceStandup",
+      "ipc": "omega:workforce:standup",
+      "domain": "office",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/workforce/standup"
+      },
+      "ws": null
+    },
+    {
+      "key": "officeSnapshot",
+      "ipc": "omega:office:snapshot",
+      "domain": "office",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": "office.snapshot",
+      "http": {
+        "method": "GET",
+        "path": "/v1/office/snapshot",
+        "engine": "office.snapshot"
+      },
+      "ws": null
+    },
+    {
+      "key": "officeChanged",
+      "ipc": "omega:office:changed",
+      "domain": "office",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "GET",
+        "path": "/v1/office/changed"
+      },
+      "ws": null
+    },
+    {
+      "key": "officeAddMonitor",
+      "ipc": "omega:office:addMonitor",
+      "domain": "office",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/office/addMonitor"
+      },
+      "ws": null
+    },
+    {
+      "key": "officeRefreshMonitor",
+      "ipc": "omega:office:refreshMonitor",
+      "domain": "office",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/office/refreshMonitor"
+      },
+      "ws": null
+    },
+    {
+      "key": "officeFetchPr",
+      "ipc": "omega:office:fetchPr",
+      "domain": "office",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/office/fetchPr"
+      },
+      "ws": null
+    },
+    {
+      "key": "officePrComment",
+      "ipc": "omega:office:prComment",
+      "domain": "office",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/office/prComment"
+      },
+      "ws": null
+    },
+    {
+      "key": "officePrReview",
+      "ipc": "omega:office:prReview",
+      "domain": "office",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/office/prReview"
+      },
+      "ws": null
+    },
+    {
+      "key": "officeJiraComment",
+      "ipc": "omega:office:jiraComment",
+      "domain": "office",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/office/jiraComment"
+      },
+      "ws": null
+    },
+    {
+      "key": "officePollSet",
+      "ipc": "omega:office:pollSet",
+      "domain": "office",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/office/pollSet"
+      },
+      "ws": null
+    },
+    {
+      "key": "officePollRefreshAll",
+      "ipc": "omega:office:pollRefreshAll",
+      "domain": "office",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/office/pollRefreshAll"
+      },
+      "ws": null
+    },
+    {
+      "key": "officeSkillGym",
+      "ipc": "omega:office:skillGym",
+      "domain": "office",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/office/skillGym"
+      },
+      "ws": null
+    },
+    {
+      "key": "officeJanitor",
+      "ipc": "omega:office:janitor",
+      "domain": "office",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/office/janitor"
+      },
+      "ws": null
+    },
+    {
+      "key": "officeKanbanPin",
+      "ipc": "omega:office:kanbanPin",
+      "domain": "office",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/office/kanbanPin"
+      },
+      "ws": null
+    },
+    {
+      "key": "officeKanbanMonitor",
+      "ipc": "omega:office:kanbanMonitor",
+      "domain": "office",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/office/kanbanMonitor"
+      },
+      "ws": null
+    },
+    {
+      "key": "workforceParallel",
+      "ipc": "omega:workforce:parallel",
+      "domain": "office",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/workforce/parallel"
+      },
+      "ws": null
+    },
+    {
+      "key": "integrationsGet",
+      "ipc": "omega:integrations:get",
+      "domain": "other",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "GET",
+        "path": "/v1/integrations/get"
+      },
+      "ws": null
+    },
+    {
+      "key": "integrationsSet",
+      "ipc": "omega:integrations:set",
+      "domain": "other",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/integrations/set"
+      },
+      "ws": null
+    },
+    {
+      "key": "officeVisualizationStatus",
+      "ipc": "omega:office:visualization:status",
+      "domain": "office",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "GET",
+        "path": "/v1/office/visualization/status"
+      },
+      "ws": null
+    },
+    {
+      "key": "officeVisualizationSetup",
+      "ipc": "omega:office:visualization:setup",
+      "domain": "office",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/office/visualization/setup"
+      },
+      "ws": null
+    },
+    {
+      "key": "officeVisualizationStart",
+      "ipc": "omega:office:visualization:start",
+      "domain": "office",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": "office.start",
+      "http": {
+        "method": "POST",
+        "path": "/v1/office/visualization/start",
+        "engine": "office.start"
+      },
+      "ws": null
+    },
+    {
+      "key": "officeVisualizationStop",
+      "ipc": "omega:office:visualization:stop",
+      "domain": "office",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": "office.stop",
+      "http": {
+        "method": "DELETE",
+        "path": "/v1/office/visualization/stop",
+        "engine": "office.stop"
+      },
+      "ws": null
+    },
+    {
+      "key": "mediaState",
+      "ipc": "omega:media:state",
+      "domain": "media",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/media/state"
+      },
+      "ws": null
+    },
+    {
+      "key": "mediaStop",
+      "ipc": "omega:media:stop",
+      "domain": "media",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "DELETE",
+        "path": "/v1/media/stop"
+      },
+      "ws": null
+    },
+    {
+      "key": "mediaPause",
+      "ipc": "omega:media:pause",
+      "domain": "media",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/media/pause"
+      },
+      "ws": null
+    },
+    {
+      "key": "mediaResume",
+      "ipc": "omega:media:resume",
+      "domain": "media",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/media/resume"
+      },
+      "ws": null
+    },
+    {
+      "key": "mediaShowPreview",
+      "ipc": "omega:media:showPreview",
+      "domain": "media",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/media/showPreview"
+      },
+      "ws": null
+    },
+    {
+      "key": "mediaReopenSessionVideo",
+      "ipc": "omega:media:reopenSessionVideo",
+      "domain": "media",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/media/reopenSessionVideo"
+      },
+      "ws": null
+    },
+    {
+      "key": "voiceSpeak",
+      "ipc": "omega:voice:speak",
+      "domain": "other",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/voice/speak"
+      },
+      "ws": null
+    },
+    {
+      "key": "assistantDefaultPrompt",
+      "ipc": "omega:assistant:defaultPrompt",
+      "domain": "other",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/assistant/defaultPrompt"
+      },
+      "ws": null
+    },
+    {
+      "key": "selfImproveList",
+      "ipc": "omega:self-improve:list",
+      "domain": "other",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "GET",
+        "path": "/v1/self-improve/list"
+      },
+      "ws": null
+    },
+    {
+      "key": "selfImproveReflect",
+      "ipc": "omega:self-improve:reflect",
+      "domain": "other",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/self-improve/reflect"
+      },
+      "ws": null
+    },
+    {
+      "key": "selfImproveJanitor",
+      "ipc": "omega:self-improve:janitor",
+      "domain": "other",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/self-improve/janitor"
+      },
+      "ws": null
+    },
+    {
+      "key": "updaterStatus",
+      "ipc": "omega:updater:status",
+      "domain": "other",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "GET",
+        "path": "/v1/updater/status"
+      },
+      "ws": null
+    },
+    {
+      "key": "updaterCheck",
+      "ipc": "omega:updater:check",
+      "domain": "other",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/updater/check"
+      },
+      "ws": null
+    },
+    {
+      "key": "updaterInstall",
+      "ipc": "omega:updater:install",
+      "domain": "other",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/updater/install"
+      },
+      "ws": null
+    },
+    {
+      "key": "updaterStatusEvent",
+      "ipc": "omega:updater:status-event",
+      "domain": "other",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/updater/status-event"
+      },
+      "ws": null
+    },
+    {
+      "key": "memoryList",
+      "ipc": "omega:memory:list",
+      "domain": "memory",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "GET",
+        "path": "/v1/memory/list"
+      },
+      "ws": null
+    },
+    {
+      "key": "memoryAdd",
+      "ipc": "omega:memory:add",
+      "domain": "memory",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": "memory.add",
+      "http": {
+        "method": "POST",
+        "path": "/v1/memory/add",
+        "engine": "memory.add"
+      },
+      "ws": null
+    },
+    {
+      "key": "memoryDelete",
+      "ipc": "omega:memory:delete",
+      "domain": "memory",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "DELETE",
+        "path": "/v1/memory/delete"
+      },
+      "ws": null
+    },
+    {
+      "key": "memorySearch",
+      "ipc": "omega:memory:search",
+      "domain": "memory",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": "memory.search",
+      "http": {
+        "method": "GET",
+        "path": "/v1/memory/search",
+        "engine": "memory.search"
+      },
+      "ws": null
+    },
+    {
+      "key": "memoryGraph",
+      "ipc": "omega:memory:graph",
+      "domain": "memory",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "GET",
+        "path": "/v1/memory/graph"
+      },
+      "ws": null
+    },
+    {
+      "key": "memoryProjectContext",
+      "ipc": "omega:memory:projectContext",
+      "domain": "memory",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/memory/projectContext"
+      },
+      "ws": null
+    },
+    {
+      "key": "projectOpenFolder",
+      "ipc": "omega:project:open",
+      "domain": "other",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/project/open"
+      },
+      "ws": null
+    },
+    {
+      "key": "projectListFiles",
+      "ipc": "omega:project:list",
+      "domain": "other",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "GET",
+        "path": "/v1/project/list"
+      },
+      "ws": null
+    },
+    {
+      "key": "memoryExport",
+      "ipc": "omega:memory:export",
+      "domain": "memory",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/memory/export"
+      },
+      "ws": null
+    },
+    {
+      "key": "memoryImport",
+      "ipc": "omega:memory:import",
+      "domain": "memory",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/memory/import"
+      },
+      "ws": null
+    },
+    {
+      "key": "memoryJanitorRun",
+      "ipc": "omega:memory:janitorRun",
+      "domain": "memory",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/memory/janitorRun"
+      },
+      "ws": null
+    },
+    {
+      "key": "contextBuffer",
+      "ipc": "omega:context:buffer",
+      "domain": "memory",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "GET",
+        "path": "/v1/context/buffer"
+      },
+      "ws": null
+    },
+    {
+      "key": "toolsList",
+      "ipc": "omega:tools:list",
+      "domain": "other",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": "tool.list",
+      "http": {
+        "method": "GET",
+        "path": "/v1/tools/list",
+        "engine": "tool.list"
+      },
+      "ws": null
+    },
+    {
+      "key": "toolsToggle",
+      "ipc": "omega:tools:toggle",
+      "domain": "other",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/tools/toggle"
+      },
+      "ws": null
+    },
+    {
+      "key": "toolsRun",
+      "ipc": "omega:tools:run",
+      "domain": "other",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": "tool.run",
+      "http": {
+        "method": "POST",
+        "path": "/v1/tools/run",
+        "engine": "tool.run"
+      },
+      "ws": null
+    },
+    {
+      "key": "toolApproveRequest",
+      "ipc": "omega:tool:approve:req",
+      "domain": "other",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/tool/approve/req"
+      },
+      "ws": null
+    },
+    {
+      "key": "toolApproveResolve",
+      "ipc": "omega:tool:approve:resolve",
+      "domain": "other",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/tool/approve/resolve"
+      },
+      "ws": null
+    },
+    {
+      "key": "capabilityPermissionRequest",
+      "ipc": "omega:capability:permission:req",
+      "domain": "other",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/capability/permission/req"
+      },
+      "ws": null
+    },
+    {
+      "key": "capabilityPermissionResolve",
+      "ipc": "omega:capability:permission:resolve",
+      "domain": "other",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/capability/permission/resolve"
+      },
+      "ws": null
+    },
+    {
+      "key": "configChanged",
+      "ipc": "omega:config:changed",
+      "domain": "other",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "GET",
+        "path": "/v1/config/changed"
+      },
+      "ws": null
+    },
+    {
+      "key": "pluginsList",
+      "ipc": "omega:plugins:list",
+      "domain": "plugins",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": "plugin.list",
+      "http": {
+        "method": "GET",
+        "path": "/v1/plugins/list",
+        "engine": "plugin.list"
+      },
+      "ws": null
+    },
+    {
+      "key": "pluginsToggle",
+      "ipc": "omega:plugins:toggle",
+      "domain": "plugins",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": "plugin.toggle",
+      "http": {
+        "method": "POST",
+        "path": "/v1/plugins/toggle",
+        "engine": "plugin.toggle"
+      },
+      "ws": null
+    },
+    {
+      "key": "pluginsReload",
+      "ipc": "omega:plugins:reload",
+      "domain": "plugins",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": "plugin.reload",
+      "http": {
+        "method": "POST",
+        "path": "/v1/plugins/reload",
+        "engine": "plugin.reload"
+      },
+      "ws": null
+    },
+    {
+      "key": "streamToken",
+      "ipc": "omega:stream:token",
+      "domain": "chat",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/stream/token"
+      },
+      "ws": null
+    },
+    {
+      "key": "streamMetrics",
+      "ipc": "omega:stream:metrics",
+      "domain": "chat",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/stream/metrics"
+      },
+      "ws": null
+    },
+    {
+      "key": "streamMedia",
+      "ipc": "omega:stream:media",
+      "domain": "chat",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/stream/media"
+      },
+      "ws": null
+    },
+    {
+      "key": "streamDone",
+      "ipc": "omega:stream:done",
+      "domain": "chat",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/stream/done"
+      },
+      "ws": null
+    },
+    {
+      "key": "streamError",
+      "ipc": "omega:stream:error",
+      "domain": "chat",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/stream/error"
+      },
+      "ws": null
+    },
+    {
+      "key": "sessionMessageAppended",
+      "ipc": "omega:session:messageAppended",
+      "domain": "chat",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/session/messageAppended"
+      },
+      "ws": null
+    },
+    {
+      "key": "sessionAssistantPatch",
+      "ipc": "omega:session:assistantPatch",
+      "domain": "chat",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/session/assistantPatch"
+      },
+      "ws": null
+    },
+    {
+      "key": "agentStep",
+      "ipc": "omega:agent:step",
+      "domain": "chat",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/agent/step"
+      },
+      "ws": null
+    },
+    {
+      "key": "pipelineActivityGet",
+      "ipc": "omega:pipeline:activity:get",
+      "domain": "other",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "GET",
+        "path": "/v1/pipeline/activity/get"
+      },
+      "ws": null
+    },
+    {
+      "key": "pipelineActivityChanged",
+      "ipc": "omega:pipeline:activity:changed",
+      "domain": "other",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "GET",
+        "path": "/v1/pipeline/activity/changed"
+      },
+      "ws": null
+    },
+    {
+      "key": "agentToken",
+      "ipc": "omega:agent:token",
+      "domain": "chat",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/agent/token"
+      },
+      "ws": null
+    },
+    {
+      "key": "modelsDownload",
+      "ipc": "omega:models:download",
+      "domain": "models",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/models/download"
+      },
+      "ws": null
+    },
+    {
+      "key": "modelsDownloadRequired",
+      "ipc": "omega:models:download-required",
+      "domain": "models",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/models/download-required"
+      },
+      "ws": null
+    },
+    {
+      "key": "modelsDownloadCancel",
+      "ipc": "omega:models:download:cancel",
+      "domain": "models",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "DELETE",
+        "path": "/v1/models/download/cancel"
+      },
+      "ws": null
+    },
+    {
+      "key": "modelsDownloadAdapter",
+      "ipc": "omega:models:download-adapter",
+      "domain": "models",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/models/download-adapter"
+      },
+      "ws": null
+    },
+    {
+      "key": "modelsCheckHfAccess",
+      "ipc": "omega:models:check-hf-access",
+      "domain": "models",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/models/check-hf-access"
+      },
+      "ws": null
+    },
+    {
+      "key": "modelsOpenHfRepo",
+      "ipc": "omega:models:open-hf-repo",
+      "domain": "models",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/models/open-hf-repo"
+      },
+      "ws": null
+    },
+    {
+      "key": "downloadProgress",
+      "ipc": "omega:download:progress",
+      "domain": "other",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/download/progress"
+      },
+      "ws": null
+    },
+    {
+      "key": "modelsRepoFiles",
+      "ipc": "omega:models:repo-files",
+      "domain": "models",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/models/repo-files"
+      },
+      "ws": null
+    },
+    {
+      "key": "modelsBenchmark",
+      "ipc": "omega:models:benchmark",
+      "domain": "models",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "GET",
+        "path": "/v1/models/benchmark"
+      },
+      "ws": null
+    },
+    {
+      "key": "modelsFootprint",
+      "ipc": "omega:models:footprint",
+      "domain": "models",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "GET",
+        "path": "/v1/models/footprint"
+      },
+      "ws": null
+    },
+    {
+      "key": "hfSearch",
+      "ipc": "omega:hf:search",
+      "domain": "other",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "GET",
+        "path": "/v1/hf/search"
+      },
+      "ws": null
+    },
+    {
+      "key": "hfCard",
+      "ipc": "omega:hf:card",
+      "domain": "other",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "GET",
+        "path": "/v1/hf/card"
+      },
+      "ws": null
+    },
+    {
+      "key": "hfTags",
+      "ipc": "omega:hf:tags",
+      "domain": "other",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "GET",
+        "path": "/v1/hf/tags"
+      },
+      "ws": null
+    },
+    {
+      "key": "gpuList",
+      "ipc": "omega:gpu:list",
+      "domain": "models",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "GET",
+        "path": "/v1/gpu/list"
+      },
+      "ws": null
+    },
+    {
+      "key": "modelInspect",
+      "ipc": "omega:model:inspect",
+      "domain": "models",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "GET",
+        "path": "/v1/model/inspect"
+      },
+      "ws": null
+    },
+    {
+      "key": "modelEstimate",
+      "ipc": "omega:model:estimate",
+      "domain": "models",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "GET",
+        "path": "/v1/model/estimate"
+      },
+      "ws": null
+    },
+    {
+      "key": "modelEstimateFile",
+      "ipc": "omega:model:estimateFile",
+      "domain": "models",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/model/estimateFile"
+      },
+      "ws": null
+    },
+    {
+      "key": "skillsList",
+      "ipc": "omega:skills:list",
+      "domain": "other",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "GET",
+        "path": "/v1/skills/list"
+      },
+      "ws": null
+    },
+    {
+      "key": "skillsGet",
+      "ipc": "omega:skills:get",
+      "domain": "other",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "GET",
+        "path": "/v1/skills/get"
+      },
+      "ws": null
+    },
+    {
+      "key": "skillsSave",
+      "ipc": "omega:skills:save",
+      "domain": "other",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/skills/save"
+      },
+      "ws": null
+    },
+    {
+      "key": "skillsDelete",
+      "ipc": "omega:skills:delete",
+      "domain": "other",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "DELETE",
+        "path": "/v1/skills/delete"
+      },
+      "ws": null
+    },
+    {
+      "key": "skillsToggle",
+      "ipc": "omega:skills:toggle",
+      "domain": "other",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/skills/toggle"
+      },
+      "ws": null
+    },
+    {
+      "key": "profilesList",
+      "ipc": "omega:profiles:list",
+      "domain": "other",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "GET",
+        "path": "/v1/profiles/list"
+      },
+      "ws": null
+    },
+    {
+      "key": "profilesCreate",
+      "ipc": "omega:profiles:create",
+      "domain": "other",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/profiles/create"
+      },
+      "ws": null
+    },
+    {
+      "key": "profilesSwitch",
+      "ipc": "omega:profiles:switch",
+      "domain": "other",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/profiles/switch"
+      },
+      "ws": null
+    },
+    {
+      "key": "profilesDelete",
+      "ipc": "omega:profiles:delete",
+      "domain": "other",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "DELETE",
+        "path": "/v1/profiles/delete"
+      },
+      "ws": null
+    },
+    {
+      "key": "soulGet",
+      "ipc": "omega:soul:get",
+      "domain": "other",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "GET",
+        "path": "/v1/soul/get"
+      },
+      "ws": null
+    },
+    {
+      "key": "soulSet",
+      "ipc": "omega:soul:set",
+      "domain": "other",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/soul/set"
+      },
+      "ws": null
+    },
+    {
+      "key": "soulReset",
+      "ipc": "omega:soul:reset",
+      "domain": "other",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "DELETE",
+        "path": "/v1/soul/reset"
+      },
+      "ws": null
+    },
+    {
+      "key": "orchestratorPromptsDefaults",
+      "ipc": "omega:orchestrator-prompts:defaults",
+      "domain": "other",
+      "target": "cxx",
+      "phase": 4,
+      "status": "electron",
+      "engine_command": null,
+      "http": {
+        "method": "GET",
+        "path": "/v1/orchestrator-prompts/defaults"
+      },
+      "ws": null
+    },
+    {
+      "key": "cronList",
+      "ipc": "omega:cron:list",
+      "domain": "other",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "GET",
+        "path": "/v1/cron/list"
+      },
+      "ws": null
+    },
+    {
+      "key": "cronSave",
+      "ipc": "omega:cron:save",
+      "domain": "other",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/cron/save"
+      },
+      "ws": null
+    },
+    {
+      "key": "cronDelete",
+      "ipc": "omega:cron:delete",
+      "domain": "other",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "DELETE",
+        "path": "/v1/cron/delete"
+      },
+      "ws": null
+    },
+    {
+      "key": "cronPause",
+      "ipc": "omega:cron:pause",
+      "domain": "other",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/cron/pause"
+      },
+      "ws": null
+    },
+    {
+      "key": "cronRunNow",
+      "ipc": "omega:cron:runNow",
+      "domain": "other",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/cron/runNow"
+      },
+      "ws": null
+    },
+    {
+      "key": "cronChanged",
+      "ipc": "omega:cron:changed",
+      "domain": "other",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "GET",
+        "path": "/v1/cron/changed"
+      },
+      "ws": null
+    },
+    {
+      "key": "kanbanList",
+      "ipc": "omega:kanban:list",
+      "domain": "other",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "GET",
+        "path": "/v1/kanban/list"
+      },
+      "ws": null
+    },
+    {
+      "key": "kanbanSave",
+      "ipc": "omega:kanban:save",
+      "domain": "other",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/kanban/save"
+      },
+      "ws": null
+    },
+    {
+      "key": "kanbanMove",
+      "ipc": "omega:kanban:move",
+      "domain": "other",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/kanban/move"
+      },
+      "ws": null
+    },
+    {
+      "key": "kanbanDelete",
+      "ipc": "omega:kanban:delete",
+      "domain": "other",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "DELETE",
+        "path": "/v1/kanban/delete"
+      },
+      "ws": null
+    },
+    {
+      "key": "kanbanDispatch",
+      "ipc": "omega:kanban:dispatch",
+      "domain": "other",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/kanban/dispatch"
+      },
+      "ws": null
+    },
+    {
+      "key": "kanbanChanged",
+      "ipc": "omega:kanban:changed",
+      "domain": "other",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "GET",
+        "path": "/v1/kanban/changed"
+      },
+      "ws": null
+    },
+    {
+      "key": "mcpList",
+      "ipc": "omega:mcp:list",
+      "domain": "other",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "GET",
+        "path": "/v1/mcp/list"
+      },
+      "ws": null
+    },
+    {
+      "key": "mcpSave",
+      "ipc": "omega:mcp:save",
+      "domain": "other",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/mcp/save"
+      },
+      "ws": null
+    },
+    {
+      "key": "mcpDelete",
+      "ipc": "omega:mcp:delete",
+      "domain": "other",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "DELETE",
+        "path": "/v1/mcp/delete"
+      },
+      "ws": null
+    },
+    {
+      "key": "mcpStart",
+      "ipc": "omega:mcp:start",
+      "domain": "other",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/mcp/start"
+      },
+      "ws": null
+    },
+    {
+      "key": "mcpStop",
+      "ipc": "omega:mcp:stop",
+      "domain": "other",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "DELETE",
+        "path": "/v1/mcp/stop"
+      },
+      "ws": null
+    },
+    {
+      "key": "mcpStatus",
+      "ipc": "omega:mcp:status",
+      "domain": "other",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "GET",
+        "path": "/v1/mcp/status"
+      },
+      "ws": null
+    },
+    {
+      "key": "mcpStatusChanged",
+      "ipc": "omega:mcp:statusChanged",
+      "domain": "events",
+      "target": "ws",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/mcp/statusChanged"
+      },
+      "ws": "/v1/eventsmcp/statusChanged"
+    },
+    {
+      "key": "providersList",
+      "ipc": "omega:providers:list",
+      "domain": "other",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "GET",
+        "path": "/v1/providers/list"
+      },
+      "ws": null
+    },
+    {
+      "key": "providersSave",
+      "ipc": "omega:providers:save",
+      "domain": "other",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/providers/save"
+      },
+      "ws": null
+    },
+    {
+      "key": "providersDelete",
+      "ipc": "omega:providers:delete",
+      "domain": "other",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "DELETE",
+        "path": "/v1/providers/delete"
+      },
+      "ws": null
+    },
+    {
+      "key": "providersPresets",
+      "ipc": "omega:providers:presets",
+      "domain": "other",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "GET",
+        "path": "/v1/providers/presets"
+      },
+      "ws": null
+    },
+    {
+      "key": "providersDiscover",
+      "ipc": "omega:providers:discover",
+      "domain": "other",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/providers/discover"
+      },
+      "ws": null
+    },
+    {
+      "key": "providersFetchModels",
+      "ipc": "omega:providers:fetchModels",
+      "domain": "other",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/providers/fetchModels"
+      },
+      "ws": null
+    },
+    {
+      "key": "providersChanged",
+      "ipc": "omega:providers:changed",
+      "domain": "other",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "GET",
+        "path": "/v1/providers/changed"
+      },
+      "ws": null
+    },
+    {
+      "key": "gatewayPlatforms",
+      "ipc": "omega:gateway:platforms",
+      "domain": "other",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "GET",
+        "path": "/v1/gateway/platforms"
+      },
+      "ws": null
+    },
+    {
+      "key": "gatewayList",
+      "ipc": "omega:gateway:list",
+      "domain": "other",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "GET",
+        "path": "/v1/gateway/list"
+      },
+      "ws": null
+    },
+    {
+      "key": "gatewaySave",
+      "ipc": "omega:gateway:save",
+      "domain": "other",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/gateway/save"
+      },
+      "ws": null
+    },
+    {
+      "key": "gatewayDelete",
+      "ipc": "omega:gateway:delete",
+      "domain": "other",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "DELETE",
+        "path": "/v1/gateway/delete"
+      },
+      "ws": null
+    },
+    {
+      "key": "gatewayStart",
+      "ipc": "omega:gateway:start",
+      "domain": "other",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/gateway/start"
+      },
+      "ws": null
+    },
+    {
+      "key": "gatewayStop",
+      "ipc": "omega:gateway:stop",
+      "domain": "other",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "DELETE",
+        "path": "/v1/gateway/stop"
+      },
+      "ws": null
+    },
+    {
+      "key": "gatewayStatus",
+      "ipc": "omega:gateway:status",
+      "domain": "other",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "GET",
+        "path": "/v1/gateway/status"
+      },
+      "ws": null
+    },
+    {
+      "key": "gatewayStatusChanged",
+      "ipc": "omega:gateway:statusChanged",
+      "domain": "events",
+      "target": "ws",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/gateway/statusChanged"
+      },
+      "ws": "/v1/eventsgateway/statusChanged"
+    },
+    {
+      "key": "inferenceBackends",
+      "ipc": "omega:inference:backends",
+      "domain": "models",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "GET",
+        "path": "/v1/inference/backends"
+      },
+      "ws": null
+    },
+    {
+      "key": "enginesStatus",
+      "ipc": "omega:engines:status",
+      "domain": "models",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "GET",
+        "path": "/v1/engines/status"
+      },
+      "ws": null
+    },
+    {
+      "key": "enginesOllamaStart",
+      "ipc": "omega:engines:ollama:start",
+      "domain": "models",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/engines/ollama/start"
+      },
+      "ws": null
+    },
+    {
+      "key": "enginesOllamaStop",
+      "ipc": "omega:engines:ollama:stop",
+      "domain": "models",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "DELETE",
+        "path": "/v1/engines/ollama/stop"
+      },
+      "ws": null
+    },
+    {
+      "key": "enginesOllamaPull",
+      "ipc": "omega:engines:ollama:pull",
+      "domain": "models",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/engines/ollama/pull"
+      },
+      "ws": null
+    },
+    {
+      "key": "enginesOllamaPullProgress",
+      "ipc": "omega:engines:ollama:pullProgress",
+      "domain": "models",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/engines/ollama/pullProgress"
+      },
+      "ws": null
+    },
+    {
+      "key": "enginesOllamaList",
+      "ipc": "omega:engines:ollama:list",
+      "domain": "models",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "GET",
+        "path": "/v1/engines/ollama/list"
+      },
+      "ws": null
+    },
+    {
+      "key": "sidecarStatus",
+      "ipc": "omega:engines:sidecar:status",
+      "domain": "models",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "GET",
+        "path": "/v1/engines/sidecar/status"
+      },
+      "ws": null
+    },
+    {
+      "key": "sidecarInstall",
+      "ipc": "omega:engines:sidecar:install",
+      "domain": "models",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/engines/sidecar/install"
+      },
+      "ws": null
+    },
+    {
+      "key": "sidecarInstallProgress",
+      "ipc": "omega:engines:sidecar:installProgress",
+      "domain": "models",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/engines/sidecar/installProgress"
+      },
+      "ws": null
+    },
+    {
+      "key": "sidecarUninstall",
+      "ipc": "omega:engines:sidecar:uninstall",
+      "domain": "models",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "DELETE",
+        "path": "/v1/engines/sidecar/uninstall"
+      },
+      "ws": null
+    },
+    {
+      "key": "routerModelsStatus",
+      "ipc": "omega:routerModels:status",
+      "domain": "python",
+      "target": "python",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "GET",
+        "path": "/v1/routerModels/status"
+      },
+      "ws": null
+    },
+    {
+      "key": "routerModelsInstallNodeRuntime",
+      "ipc": "omega:routerModels:installNodeRuntime",
+      "domain": "python",
+      "target": "python",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/routerModels/installNodeRuntime"
+      },
+      "ws": null
+    },
+    {
+      "key": "routerModelsSetupPython",
+      "ipc": "omega:routerModels:setupPython",
+      "domain": "python",
+      "target": "python",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/routerModels/setupPython"
+      },
+      "ws": null
+    },
+    {
+      "key": "routerModelsBuild",
+      "ipc": "omega:routerModels:build",
+      "domain": "python",
+      "target": "python",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/routerModels/build"
+      },
+      "ws": null
+    },
+    {
+      "key": "routerModelsBuildProgress",
+      "ipc": "omega:routerModels:buildProgress",
+      "domain": "python",
+      "target": "python",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/routerModels/buildProgress"
+      },
+      "ws": null
+    },
+    {
+      "key": "routerModelsRemove",
+      "ipc": "omega:routerModels:remove",
+      "domain": "python",
+      "target": "python",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "DELETE",
+        "path": "/v1/routerModels/remove"
+      },
+      "ws": null
+    },
+    {
+      "key": "pluginsCatalog",
+      "ipc": "omega:plugins:catalog",
+      "domain": "plugins",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": "plugin.catalog",
+      "http": {
+        "method": "GET",
+        "path": "/v1/plugins/catalog",
+        "engine": "plugin.catalog"
+      },
+      "ws": null
+    },
+    {
+      "key": "pluginsInstallBuiltin",
+      "ipc": "omega:plugins:installBuiltin",
+      "domain": "plugins",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": "plugin.install",
+      "http": {
+        "method": "POST",
+        "path": "/v1/plugins/installBuiltin",
+        "engine": "plugin.install"
+      },
+      "ws": null
+    },
+    {
+      "key": "pluginsInstallUrl",
+      "ipc": "omega:plugins:installUrl",
+      "domain": "plugins",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": "plugin.install",
+      "http": {
+        "method": "POST",
+        "path": "/v1/plugins/installUrl",
+        "engine": "plugin.install"
+      },
+      "ws": null
+    },
+    {
+      "key": "pluginsUninstall",
+      "ipc": "omega:plugins:uninstall",
+      "domain": "plugins",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": "plugin.uninstall",
+      "http": {
+        "method": "DELETE",
+        "path": "/v1/plugins/uninstall",
+        "engine": "plugin.uninstall"
+      },
+      "ws": null
+    },
+    {
+      "key": "inferenceBackend",
+      "ipc": "omega:inference:backend",
+      "domain": "models",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "GET",
+        "path": "/v1/inference/backend"
+      },
+      "ws": null
+    },
+    {
+      "key": "inferenceSwitch",
+      "ipc": "omega:inference:switch",
+      "domain": "models",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/inference/switch"
+      },
+      "ws": null
+    },
+    {
+      "key": "debugSubscribe",
+      "ipc": "omega:debug:event",
+      "domain": "other",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/debug/event"
+      },
+      "ws": null
+    },
+    {
+      "key": "debugHistory",
+      "ipc": "omega:debug:history",
+      "domain": "other",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "GET",
+        "path": "/v1/debug/history"
+      },
+      "ws": null
+    },
+    {
+      "key": "loadedModels",
+      "ipc": "omega:runtime:loaded",
+      "domain": "other",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "GET",
+        "path": "/v1/models/loaded"
+      },
+      "ws": null
+    },
+    {
+      "key": "workflowsList",
+      "ipc": "omega:workflows:list",
+      "domain": "workflows",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "GET",
+        "path": "/v1/workflows/list"
+      },
+      "ws": null
+    },
+    {
+      "key": "workflowsGet",
+      "ipc": "omega:workflows:get",
+      "domain": "workflows",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "GET",
+        "path": "/v1/workflows/get"
+      },
+      "ws": null
+    },
+    {
+      "key": "workflowsSave",
+      "ipc": "omega:workflows:save",
+      "domain": "workflows",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/workflows/save"
+      },
+      "ws": null
+    },
+    {
+      "key": "workflowsDelete",
+      "ipc": "omega:workflows:delete",
+      "domain": "workflows",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "DELETE",
+        "path": "/v1/workflows/delete"
+      },
+      "ws": null
+    },
+    {
+      "key": "workflowsRun",
+      "ipc": "omega:workflows:run",
+      "domain": "workflows",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": "workflow.run",
+      "http": {
+        "method": "POST",
+        "path": "/v1/workflows/run",
+        "engine": "workflow.run"
+      },
+      "ws": null
+    },
+    {
+      "key": "workflowsAbort",
+      "ipc": "omega:workflows:abort",
+      "domain": "workflows",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": "workflow.abort",
+      "http": {
+        "method": "DELETE",
+        "path": "/v1/workflows/abort",
+        "engine": "workflow.abort"
+      },
+      "ws": null
+    },
+    {
+      "key": "workflowsEvent",
+      "ipc": "omega:workflows:event",
+      "domain": "workflows",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/workflows/event"
+      },
+      "ws": null
+    },
+    {
+      "key": "inputPipelinesList",
+      "ipc": "omega:input-pipelines:list",
+      "domain": "other",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "GET",
+        "path": "/v1/input-pipelines/list"
+      },
+      "ws": null
+    },
+    {
+      "key": "inputPipelinesGet",
+      "ipc": "omega:input-pipelines:get",
+      "domain": "other",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "GET",
+        "path": "/v1/input-pipelines/get"
+      },
+      "ws": null
+    },
+    {
+      "key": "inputPipelinesSave",
+      "ipc": "omega:input-pipelines:save",
+      "domain": "other",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/input-pipelines/save"
+      },
+      "ws": null
+    },
+    {
+      "key": "inputPipelinesDelete",
+      "ipc": "omega:input-pipelines:delete",
+      "domain": "other",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/input-pipelines/delete"
+      },
+      "ws": null
+    },
+    {
+      "key": "inputPipelinesSetActive",
+      "ipc": "omega:input-pipelines:set-active",
+      "domain": "other",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/input-pipelines/set-active"
+      },
+      "ws": null
+    },
+    {
+      "key": "ragList",
+      "ipc": "omega:rag:list",
+      "domain": "memory",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "GET",
+        "path": "/v1/rag/list"
+      },
+      "ws": null
+    },
+    {
+      "key": "ragIndexFile",
+      "ipc": "omega:rag:index-file",
+      "domain": "memory",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/rag/index-file"
+      },
+      "ws": null
+    },
+    {
+      "key": "ragIndexDir",
+      "ipc": "omega:rag:index-dir",
+      "domain": "memory",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/rag/index-dir"
+      },
+      "ws": null
+    },
+    {
+      "key": "ragClear",
+      "ipc": "omega:rag:clear",
+      "domain": "memory",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "DELETE",
+        "path": "/v1/rag/clear"
+      },
+      "ws": null
+    },
+    {
+      "key": "ragSearch",
+      "ipc": "omega:rag:search",
+      "domain": "memory",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "GET",
+        "path": "/v1/rag/search"
+      },
+      "ws": null
+    },
+    {
+      "key": "browserShow",
+      "ipc": "omega:browser:show",
+      "domain": "browser",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/browser/show"
+      },
+      "ws": null
+    },
+    {
+      "key": "browserHide",
+      "ipc": "omega:browser:hide",
+      "domain": "browser",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/browser/hide"
+      },
+      "ws": null
+    },
+    {
+      "key": "browserHidden",
+      "ipc": "omega:browser:hidden",
+      "domain": "browser",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/browser/hidden"
+      },
+      "ws": null
+    },
+    {
+      "key": "browserMediaCommand",
+      "ipc": "omega:browser:mediaCommand",
+      "domain": "browser",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/browser/mediaCommand"
+      },
+      "ws": null
+    },
+    {
+      "key": "browserSetBounds",
+      "ipc": "omega:browser:setBounds",
+      "domain": "browser",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/browser/setBounds"
+      },
+      "ws": null
+    },
+    {
+      "key": "browserNavigate",
+      "ipc": "omega:browser:navigate",
+      "domain": "browser",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/browser/navigate"
+      },
+      "ws": null
+    },
+    {
+      "key": "browserBack",
+      "ipc": "omega:browser:back",
+      "domain": "browser",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/browser/back"
+      },
+      "ws": null
+    },
+    {
+      "key": "browserForward",
+      "ipc": "omega:browser:forward",
+      "domain": "browser",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/browser/forward"
+      },
+      "ws": null
+    },
+    {
+      "key": "browserReload",
+      "ipc": "omega:browser:reload",
+      "domain": "browser",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/browser/reload"
+      },
+      "ws": null
+    },
+    {
+      "key": "browserStatus",
+      "ipc": "omega:browser:status",
+      "domain": "browser",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "GET",
+        "path": "/v1/browser/status"
+      },
+      "ws": null
+    },
+    {
+      "key": "browserGetStatus",
+      "ipc": "omega:browser:getStatus",
+      "domain": "browser",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/browser/getStatus"
+      },
+      "ws": null
+    },
+    {
+      "key": "browserInfo",
+      "ipc": "omega:browser:info",
+      "domain": "browser",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "GET",
+        "path": "/v1/browser/info"
+      },
+      "ws": null
+    },
+    {
+      "key": "finetuneAnalyze",
+      "ipc": "omega:finetune:analyze",
+      "domain": "finetune",
+      "target": "python",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/finetune/analyze"
+      },
+      "ws": null
+    },
+    {
+      "key": "finetunePrepareDataset",
+      "ipc": "omega:finetune:prepareDataset",
+      "domain": "finetune",
+      "target": "python",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/finetune/prepareDataset"
+      },
+      "ws": null
+    },
+    {
+      "key": "finetuneList",
+      "ipc": "omega:finetune:list",
+      "domain": "finetune",
+      "target": "python",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "GET",
+        "path": "/v1/finetune/list"
+      },
+      "ws": null
+    },
+    {
+      "key": "finetuneGet",
+      "ipc": "omega:finetune:get",
+      "domain": "finetune",
+      "target": "python",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "GET",
+        "path": "/v1/finetune/get"
+      },
+      "ws": null
+    },
+    {
+      "key": "finetuneCreate",
+      "ipc": "omega:finetune:create",
+      "domain": "finetune",
+      "target": "python",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/finetune/create"
+      },
+      "ws": null
+    },
+    {
+      "key": "finetuneStart",
+      "ipc": "omega:finetune:start",
+      "domain": "finetune",
+      "target": "python",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/finetune/start"
+      },
+      "ws": null
+    },
+    {
+      "key": "finetuneAbort",
+      "ipc": "omega:finetune:abort",
+      "domain": "finetune",
+      "target": "python",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "DELETE",
+        "path": "/v1/finetune/abort"
+      },
+      "ws": null
+    },
+    {
+      "key": "finetuneDelete",
+      "ipc": "omega:finetune:delete",
+      "domain": "finetune",
+      "target": "python",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "DELETE",
+        "path": "/v1/finetune/delete"
+      },
+      "ws": null
+    },
+    {
+      "key": "finetuneProgress",
+      "ipc": "omega:finetune:progress",
+      "domain": "finetune",
+      "target": "python",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/finetune/progress"
+      },
+      "ws": null
+    },
+    {
+      "key": "finetuneListDatasets",
+      "ipc": "omega:finetune:listDatasets",
+      "domain": "finetune",
+      "target": "python",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/finetune/listDatasets"
+      },
+      "ws": null
+    },
+    {
+      "key": "finetuneListPresets",
+      "ipc": "omega:finetune:listPresets",
+      "domain": "finetune",
+      "target": "python",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/finetune/listPresets"
+      },
+      "ws": null
+    },
+    {
+      "key": "finetuneSavePreset",
+      "ipc": "omega:finetune:savePreset",
+      "domain": "finetune",
+      "target": "python",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/finetune/savePreset"
+      },
+      "ws": null
+    },
+    {
+      "key": "finetuneDeletePreset",
+      "ipc": "omega:finetune:deletePreset",
+      "domain": "finetune",
+      "target": "python",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/finetune/deletePreset"
+      },
+      "ws": null
+    },
+    {
+      "key": "finetuneInspectSource",
+      "ipc": "omega:finetune:inspectSource",
+      "domain": "finetune",
+      "target": "python",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/finetune/inspectSource"
+      },
+      "ws": null
+    },
+    {
+      "key": "finetunePickSources",
+      "ipc": "omega:finetune:pickSources",
+      "domain": "finetune",
+      "target": "python",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/finetune/pickSources"
+      },
+      "ws": null
+    },
+    {
+      "key": "finetuneDatasetsRoot",
+      "ipc": "omega:finetune:datasetsRoot",
+      "domain": "finetune",
+      "target": "python",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/finetune/datasetsRoot"
+      },
+      "ws": null
+    },
+    {
+      "key": "finetuneDeletePrepared",
+      "ipc": "omega:finetune:deletePrepared",
+      "domain": "finetune",
+      "target": "python",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/finetune/deletePrepared"
+      },
+      "ws": null
+    },
+    {
+      "key": "pythonStatus",
+      "ipc": "omega:python:status",
+      "domain": "python",
+      "target": "python",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "GET",
+        "path": "/v1/python/status"
+      },
+      "ws": null
+    },
+    {
+      "key": "pythonSetup",
+      "ipc": "omega:python:setup",
+      "domain": "python",
+      "target": "python",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/python/setup"
+      },
+      "ws": null
+    },
+    {
+      "key": "contentStudioStatus",
+      "ipc": "omega:content-studio:status",
+      "domain": "content_studio",
+      "target": "python",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "GET",
+        "path": "/v1/content-studio/status"
+      },
+      "ws": null
+    },
+    {
+      "key": "contentStudioChanged",
+      "ipc": "omega:content-studio:changed",
+      "domain": "content_studio",
+      "target": "python",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "GET",
+        "path": "/v1/content-studio/changed"
+      },
+      "ws": null
+    },
+    {
+      "key": "modelsInventoryChanged",
+      "ipc": "omega:models:inventoryChanged",
+      "domain": "models",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/models/inventoryChanged"
+      },
+      "ws": null
+    },
+    {
+      "key": "contentStudioSetupEnvironment",
+      "ipc": "omega:content-studio:setupEnvironment",
+      "domain": "content_studio",
+      "target": "python",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/python/setup"
+      },
+      "ws": null
+    },
+    {
+      "key": "contentStudioSetupProgress",
+      "ipc": "omega:content-studio:setupProgress",
+      "domain": "content_studio",
+      "target": "python",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/content-studio/setupProgress"
+      },
+      "ws": null
+    },
+    {
+      "key": "contentStudioStart",
+      "ipc": "omega:content-studio:start",
+      "domain": "content_studio",
+      "target": "python",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/content-studio/start"
+      },
+      "ws": null
+    },
+    {
+      "key": "contentStudioStop",
+      "ipc": "omega:content-studio:stop",
+      "domain": "content_studio",
+      "target": "python",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "DELETE",
+        "path": "/v1/content-studio/stop"
+      },
+      "ws": null
+    },
+    {
+      "key": "contentStudioRestart",
+      "ipc": "omega:content-studio:restart",
+      "domain": "content_studio",
+      "target": "python",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/content-studio/restart"
+      },
+      "ws": null
+    },
+    {
+      "key": "contentStudioProjects",
+      "ipc": "omega:content-studio:projects",
+      "domain": "content_studio",
+      "target": "python",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "GET",
+        "path": "/v1/content-studio/projects"
+      },
+      "ws": null
+    },
+    {
+      "key": "contentStudioCreateRun",
+      "ipc": "omega:content-studio:createRun",
+      "domain": "content_studio",
+      "target": "python",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/content-studio/createRun"
+      },
+      "ws": null
+    },
+    {
+      "key": "contentStudioRunStatus",
+      "ipc": "omega:content-studio:runStatus",
+      "domain": "content_studio",
+      "target": "python",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/content-studio/runStatus"
+      },
+      "ws": null
+    },
+    {
+      "key": "contentStudioForceStopJob",
+      "ipc": "omega:content-studio:forceStopJob",
+      "domain": "content_studio",
+      "target": "python",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/content-studio/forceStopJob"
+      },
+      "ws": null
+    },
+    {
+      "key": "contentStudioSchedules",
+      "ipc": "omega:content-studio:schedules",
+      "domain": "content_studio",
+      "target": "python",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "GET",
+        "path": "/v1/content-studio/schedules"
+      },
+      "ws": null
+    },
+    {
+      "key": "contentStudioScheduleCreate",
+      "ipc": "omega:content-studio:scheduleCreate",
+      "domain": "content_studio",
+      "target": "python",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/content-studio/scheduleCreate"
+      },
+      "ws": null
+    },
+    {
+      "key": "contentStudioScheduleDelete",
+      "ipc": "omega:content-studio:scheduleDelete",
+      "domain": "content_studio",
+      "target": "python",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/content-studio/scheduleDelete"
+      },
+      "ws": null
+    },
+    {
+      "key": "contentStudioSocialPlatforms",
+      "ipc": "omega:content-studio:socialPlatforms",
+      "domain": "content_studio",
+      "target": "python",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/content-studio/socialPlatforms"
+      },
+      "ws": null
+    },
+    {
+      "key": "contentStudioSocialAccounts",
+      "ipc": "omega:content-studio:socialAccounts",
+      "domain": "content_studio",
+      "target": "python",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/content-studio/socialAccounts"
+      },
+      "ws": null
+    },
+    {
+      "key": "contentStudioSocialPosts",
+      "ipc": "omega:content-studio:socialPosts",
+      "domain": "content_studio",
+      "target": "python",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/content-studio/socialPosts"
+      },
+      "ws": null
+    },
+    {
+      "key": "contentStudioSocialPublish",
+      "ipc": "omega:content-studio:socialPublish",
+      "domain": "content_studio",
+      "target": "python",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/content-studio/socialPublish"
+      },
+      "ws": null
+    },
+    {
+      "key": "contentStudioCredentialsGet",
+      "ipc": "omega:content-studio:credentialsGet",
+      "domain": "content_studio",
+      "target": "python",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "GET",
+        "path": "/v1/content-studio/credentialsGet"
+      },
+      "ws": null
+    },
+    {
+      "key": "contentStudioCredentialsSet",
+      "ipc": "omega:content-studio:credentialsSet",
+      "domain": "content_studio",
+      "target": "python",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/content-studio/credentialsSet"
+      },
+      "ws": null
+    },
+    {
+      "key": "contentStudioCredentialsSync",
+      "ipc": "omega:content-studio:credentialsSync",
+      "domain": "content_studio",
+      "target": "python",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/content-studio/credentialsSync"
+      },
+      "ws": null
+    },
+    {
+      "key": "contentStudioCredentialsStatus",
+      "ipc": "omega:content-studio:credentialsStatus",
+      "domain": "content_studio",
+      "target": "python",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "GET",
+        "path": "/v1/content-studio/credentialsStatus"
+      },
+      "ws": null
+    },
+    {
+      "key": "contentStudioYoutubeConnect",
+      "ipc": "omega:content-studio:youtubeConnect",
+      "domain": "content_studio",
+      "target": "python",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/content-studio/youtubeConnect"
+      },
+      "ws": null
+    },
+    {
+      "key": "contentStudioSeriesList",
+      "ipc": "omega:content-studio:seriesList",
+      "domain": "content_studio",
+      "target": "python",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/content-studio/seriesList"
+      },
+      "ws": null
+    },
+    {
+      "key": "contentStudioSeriesCreate",
+      "ipc": "omega:content-studio:seriesCreate",
+      "domain": "content_studio",
+      "target": "python",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/content-studio/seriesCreate"
+      },
+      "ws": null
+    },
+    {
+      "key": "contentStudioSeriesDelete",
+      "ipc": "omega:content-studio:seriesDelete",
+      "domain": "content_studio",
+      "target": "python",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/content-studio/seriesDelete"
+      },
+      "ws": null
+    },
+    {
+      "key": "contentStudioGenerationGet",
+      "ipc": "omega:content-studio:generationGet",
+      "domain": "content_studio",
+      "target": "python",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "GET",
+        "path": "/v1/content-studio/generationGet"
+      },
+      "ws": null
+    },
+    {
+      "key": "contentStudioGenerationSet",
+      "ipc": "omega:content-studio:generationSet",
+      "domain": "content_studio",
+      "target": "python",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/content-studio/generationSet"
+      },
+      "ws": null
+    },
+    {
+      "key": "contentStudioGenerationCatalog",
+      "ipc": "omega:content-studio:generationCatalog",
+      "domain": "content_studio",
+      "target": "python",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "GET",
+        "path": "/v1/content-studio/generationCatalog"
+      },
+      "ws": null
+    },
+    {
+      "key": "contentStudioGenerationCapabilities",
+      "ipc": "omega:content-studio:generationCapabilities",
+      "domain": "content_studio",
+      "target": "python",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "GET",
+        "path": "/v1/content-studio/generationCapabilities"
+      },
+      "ws": null
+    },
+    {
+      "key": "contentStudioGenerationDownload",
+      "ipc": "omega:content-studio:generationDownload",
+      "domain": "content_studio",
+      "target": "python",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/content-studio/generationDownload"
+      },
+      "ws": null
+    },
+    {
+      "key": "contentStudioNativeRender",
+      "ipc": "omega:content-studio:native:render",
+      "domain": "content_studio",
+      "target": "python",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/content-studio/native/render"
+      },
+      "ws": null
+    },
+    {
+      "key": "inferenceMediaCapabilities",
+      "ipc": "omega:inference:media:capabilities",
+      "domain": "models",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "GET",
+        "path": "/v1/inference/media/capabilities"
+      },
+      "ws": null
+    },
+    {
+      "key": "inferenceMediaImage",
+      "ipc": "omega:inference:media:image",
+      "domain": "models",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/inference/media/image"
+      },
+      "ws": null
+    },
+    {
+      "key": "inferenceMediaTts",
+      "ipc": "omega:inference:media:tts",
+      "domain": "models",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/inference/media/tts"
+      },
+      "ws": null
+    },
+    {
+      "key": "avatarMonitorSetEnabled",
+      "ipc": "omega:avatar-monitor:set-enabled",
+      "domain": "other",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/avatar-monitor/set-enabled"
+      },
+      "ws": null
+    },
+    {
+      "key": "avatarMonitorGetEnabled",
+      "ipc": "omega:avatar-monitor:get-enabled",
+      "domain": "other",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/avatar-monitor/get-enabled"
+      },
+      "ws": null
+    },
+    {
+      "key": "avatarMonitorEnabled",
+      "ipc": "omega:avatar-monitor:enabled",
+      "domain": "other",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "GET",
+        "path": "/v1/avatar-monitor/enabled"
+      },
+      "ws": null
+    },
+    {
+      "key": "avatarMonitorSignals",
+      "ipc": "omega:avatar-monitor:signals",
+      "domain": "other",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/avatar-monitor/signals"
+      },
+      "ws": null
+    },
+    {
+      "key": "avatarMonitorSyncLayout",
+      "ipc": "omega:avatar-monitor:sync-layout",
+      "domain": "other",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/avatar-monitor/sync-layout"
+      },
+      "ws": null
+    },
+    {
+      "key": "avatarMonitorLayout",
+      "ipc": "omega:avatar-monitor:layout",
+      "domain": "other",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "GET",
+        "path": "/v1/avatar-monitor/layout"
+      },
+      "ws": null
+    },
+    {
+      "key": "avatarMonitorSetOverlayVisible",
+      "ipc": "omega:avatar-monitor:set-overlay-visible",
+      "domain": "other",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/avatar-monitor/set-overlay-visible"
+      },
+      "ws": null
+    },
+    {
+      "key": "avatarMonitorRestoreMain",
+      "ipc": "omega:avatar-monitor:restore-main",
+      "domain": "other",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/avatar-monitor/restore-main"
+      },
+      "ws": null
+    },
+    {
+      "key": "engineCommand",
+      "ipc": "omega:engine:command",
+      "domain": "models",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/engine/command"
+      },
+      "ws": null
+    },
+    {
+      "key": "companionSetActiveChat",
+      "ipc": "omega:companion:set-active-chat",
+      "domain": "other",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/companion/set-active-chat"
+      },
+      "ws": null
+    },
+    {
+      "key": "companionGetActiveChat",
+      "ipc": "omega:companion:get-active-chat",
+      "domain": "other",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/companion/get-active-chat"
+      },
+      "ws": null
+    },
+    {
+      "key": "companionSendToMain",
+      "ipc": "omega:companion:send-to-main",
+      "domain": "other",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/companion/send-to-main"
+      },
+      "ws": null
+    },
+    {
+      "key": "companionSendDeliver",
+      "ipc": "omega:companion:send-deliver",
+      "domain": "other",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/companion/send-deliver"
+      },
+      "ws": null
+    },
+    {
+      "key": "companionReplyBroadcast",
+      "ipc": "omega:companion:reply-broadcast",
+      "domain": "other",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/companion/reply-broadcast"
+      },
+      "ws": null
+    },
+    {
+      "key": "companionReplyDeliver",
+      "ipc": "omega:companion:reply-deliver",
+      "domain": "other",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/companion/reply-deliver"
+      },
+      "ws": null
+    },
+    {
+      "key": "screenSnipCapture",
+      "ipc": "omega:screen-snip:capture",
+      "domain": "other",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/screen-snip/capture"
+      },
+      "ws": null
+    },
+    {
+      "key": "screenSnipGetBounds",
+      "ipc": "omega:screen-snip:get-bounds",
+      "domain": "other",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/screen-snip/get-bounds"
+      },
+      "ws": null
+    },
+    {
+      "key": "screenSnipSubmit",
+      "ipc": "omega:screen-snip:submit",
+      "domain": "other",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/screen-snip/submit"
+      },
+      "ws": null
+    },
+    {
+      "key": "screenSnipCancel",
+      "ipc": "omega:screen-snip:cancel",
+      "domain": "other",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "DELETE",
+        "path": "/v1/screen-snip/cancel"
+      },
+      "ws": null
+    },
+    {
+      "key": "screenSnipSave",
+      "ipc": "omega:screen-snip:save",
+      "domain": "other",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/screen-snip/save"
+      },
+      "ws": null
+    },
+    {
+      "key": "screenSnipInit",
+      "ipc": "omega:screen-snip:init",
+      "domain": "other",
+      "target": "cxx",
+      "phase": 2,
+      "status": "native",
+      "engine_command": null,
+      "http": {
+        "method": "POST",
+        "path": "/v1/screen-snip/init"
+      },
+      "ws": null
+    }
+  ]
+}

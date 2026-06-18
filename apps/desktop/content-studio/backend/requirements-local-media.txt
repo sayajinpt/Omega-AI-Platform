@@ -1,0 +1,16 @@
+# Optional local GPU stack (Qwen TTS + SD3). Install after backend/requirements.txt.
+#
+# Run from the backend folder with the Content Studio venv active:
+#   pip install --no-cache-dir -r requirements-local-media.txt
+#
+# CUDA wheels must use the PyTorch index (PyPI torch==2.11.0 is CPU-only on Windows).
+# Pin +cu130 local versions so pip does not reuse a stale cached CPU/other wheel.
+--index-url https://download.pytorch.org/whl/cu130
+--extra-index-url https://pypi.org/simple
+torch==2.11.0+cu130
+torchvision==0.26.0+cu130
+einops>=0.7.0
+#
+# FlashAttention (TTS + diffusers transformers) + SoX: python scripts/install_gpu_extras.py
+#
+# generation_models[tts,image] is installed separately by omega-runtime setup (absolute editable path).

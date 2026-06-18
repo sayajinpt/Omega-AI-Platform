@@ -1,0 +1,12 @@
+{
+  "id": "example",
+  "name": "Example Plugin",
+  "version": "1.0.0",
+  "tools": [
+    {
+      "name": "echo",
+      "description": "Echo arguments back as JSON",
+      "handler": "echo"
+    }
+  ]
+}

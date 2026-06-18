@@ -1,0 +1,6 @@
+transformers>=4.45.0
+optimum[onnxruntime]>=1.23.0
+onnx>=1.16.0
+onnxruntime>=1.19.0
+huggingface-hub>=0.26.0
+sentencepiece>=0.2.0

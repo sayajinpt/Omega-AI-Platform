@@ -1,0 +1,245 @@
+@import 'tailwindcss';
+
+:root {
+  --omega-bg: #09090b;
+  --omega-surface: #18181b;
+  --omega-surface-elevated: #27272a;
+  --omega-border: #3f3f46;
+  --omega-text: #fafafa;
+  --omega-text-muted: #a1a1aa;
+  --omega-text-heading: #e4e4e7;
+  --omega-accent: #6366f1;
+  --omega-accent-muted: #4f46e5;
+  --omega-chat-user-bg: rgba(99, 102, 241, 0.22);
+  --omega-chat-user-text: #e0e7ff;
+  --omega-chat-assistant-bg: #18181b;
+  --omega-chat-assistant-text: #f4f4f5;
+  --omega-value: #34d399;
+  --omega-code-bg: #27272a;
+  --omega-success: #34d399;
+  --omega-warning: #fbbf24;
+  --omega-error: #f87171;
+}
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  background: var(--omega-bg);
+  color: var(--omega-text);
+}
+
+.omega-app-shell {
+  background: var(--omega-bg);
+  color: var(--omega-text);
+}
+
+.omega-input {
+  border-radius: 0.5rem;
+  border: 1px solid var(--omega-border);
+  background: var(--omega-surface);
+  color: var(--omega-text);
+  padding: 0.5rem 0.75rem;
+}
+
+/* Click feedback: press scale + ripple (see ButtonClickFeedback.tsx) */
+button:not(:disabled),
+input[type='button']:not(:disabled),
+input[type='submit']:not(:disabled),
+[data-omega-clickable]:not([aria-disabled='true']) {
+  position: relative;
+  transition:
+    transform 0.12s cubic-bezier(0.2, 0.8, 0.2, 1),
+    filter 0.12s ease,
+    background-color 0.15s ease,
+    border-color 0.15s ease,
+    color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+button:not(:disabled):active,
+input[type='button']:not(:disabled):active,
+input[type='submit']:not(:disabled):active,
+[data-omega-clickable]:not([aria-disabled='true']):active {
+  transform: scale(0.97);
+  filter: brightness(1.12);
+}
+
+button:not(:disabled):focus-visible,
+input[type='button']:not(:disabled):focus-visible,
+input[type='submit']:not(:disabled):focus-visible,
+[data-omega-clickable]:not([aria-disabled='true']):focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--omega-accent) 70%, transparent);
+  outline-offset: 2px;
+}
+
+button.omega-btn-pressing,
+[data-omega-clickable].omega-btn-pressing {
+  overflow: hidden;
+}
+
+.omega-click-ripple {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 1;
+  background: color-mix(in srgb, var(--omega-accent) 40%, white 20%);
+  opacity: 0.5;
+  transform: scale(0);
+  animation: omega-click-ripple 0.42s ease-out forwards;
+}
+
+@keyframes omega-click-ripple {
+  0% {
+    transform: scale(0);
+    opacity: 0.55;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0;
+  }
+}
+
+.omega-btn-secondary {
+  border-radius: 0.375rem;
+  border: 1px solid var(--omega-border);
+  background: var(--omega-surface-elevated);
+  color: var(--omega-text);
+  padding: 0.35rem 0.75rem;
+  cursor: pointer;
+}
+
+.omega-btn-secondary:hover {
+  border-color: var(--omega-accent);
+  color: var(--omega-accent);
+}
+
+.omega-btn-secondary:active:not(:disabled) {
+  background: color-mix(in srgb, var(--omega-accent) 18%, var(--omega-surface-elevated));
+}
+
+.omega-chat-user {
+  background: var(--omega-chat-user-bg);
+  color: var(--omega-chat-user-text);
+}
+
+.omega-chat-assistant {
+  background: var(--omega-chat-assistant-bg);
+  color: var(--omega-chat-assistant-text);
+}
+
+.omega-chat-messages {
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+.omega-chat-bubble {
+  min-width: 0;
+  max-width: min(48rem, 100%);
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+/** Scroll long assistant replies inside the bubble; scrollbar hidden, wheel scrolls here first. */
+.omega-chat-bubble-scroll {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.omega-chat-bubble-scroll::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+.omega-chat-prose :is(pre, code, table) {
+  max-width: 100%;
+}
+
+.omega-chat-prose pre {
+  overflow-x: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.omega-chat-prose table {
+  display: block;
+  overflow-x: auto;
+}
+
+.omega-chat-prose :is(p, li, h1, h2, h3, h4) {
+  overflow-wrap: anywhere;
+}
+
+.omega-text-value {
+  color: var(--omega-value);
+}
+
+html[data-theme='light'] .omega-app-shell {
+  /* vars applied via applyThemeFromConfig */
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.omega-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 4px;
+  background: var(--omega-surface-elevated);
+  border-radius: 9999px;
+  outline: none;
+}
+.omega-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--omega-accent);
+  cursor: pointer;
+  box-shadow: 0 0 0 2px var(--omega-surface);
+  transition: transform 0.1s ease;
+}
+.omega-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
+}
+.omega-slider::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--omega-accent);
+  border: none;
+  cursor: pointer;
+}
+
+.omega-codemirror.h-full .cm-editor,
+.omega-codemirror.h-full {
+  height: 100%;
+}
+.omega-codemirror-fill {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+.omega-codemirror-fill > div {
+  flex: 1;
+  min-height: 0;
+  height: 100% !important;
+}
+.omega-codemirror-fill .cm-editor {
+  flex: 1;
+  min-height: 0;
+  height: 100% !important;
+}
+.omega-codemirror-fill .cm-scroller {
+  overflow: auto !important;
+  max-height: 100%;
+  -webkit-overflow-scrolling: touch;
+}
+.omega-codemirror .cm-editor {
+  background: var(--omega-bg);
+}
+.omega-codemirror .cm-scroller {
+  overflow: auto;
+}

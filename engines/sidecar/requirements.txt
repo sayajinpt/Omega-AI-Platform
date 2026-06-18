@@ -1,0 +1,11 @@
+# Omega inference sidecar — install into .omega/venvs/sidecar (see scripts/setup-sidecar-engines.mjs)
+fastapi>=0.115.0
+uvicorn[standard]>=0.32.0
+# EXL2 — https://github.com/turboderp-org/exllamav2
+exllamav2>=0.3.2
+torch>=2.1.0
+# ONNX GenAI — https://github.com/microsoft/onnxruntime-genai
+onnxruntime-genai>=0.8.0
+# onnx-community hybrid models (direct ORT session + HF tokenizer)
+transformers>=4.46.0
+tokenizers>=0.20.0

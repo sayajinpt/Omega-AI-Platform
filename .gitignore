@@ -1,0 +1,57 @@
+# Dependencies & build
+node_modules/
+out/
+build/
+dist/
+!dist/bin/README.md
+packages/sdk/dist/
+*.tsbuildinfo
+
+# Runtime binaries (fetched/built locally)
+dist/runtime/
+dist/bin/*
+!dist/bin/README.md
+
+# Desktop bundles (generated at build time)
+apps/desktop/.llama-pack-staging/
+apps/desktop/claw3d-office/
+apps/desktop/content-studio/backend/.venv/
+apps/desktop/content-studio/backend/data/
+apps/desktop/content-studio/backend/storage/
+apps/desktop/content-studio/**/__pycache__/
+
+# C++ build artifacts
+apps/runtime/build/
+apps/runtime/bin/
+apps/runtime/dist/
+apps/runtime/*.exe
+apps/runtime/native/build/
+apps/runtime/native/lib/
+apps/engine/build/
+apps/engine/native/lib/**
+!apps/engine/native/lib/.gitkeep
+apps/shell/build/
+
+# Go / native (legacy paths)
+apps/runtime/bin/
+apps/runtime/dist/
+
+# User / local
+.omega/
+.omega-home/
+.env
+.env.local
+*.log
+build-log.txt
+.DS_Store
+Thumbs.db
+tmp/
+
+# IDE
+.vscode/
+.idea/
+.cursor/
+*.swp
+
+# Test / coverage
+coverage/

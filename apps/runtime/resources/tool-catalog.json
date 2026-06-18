@@ -1,0 +1,567 @@
+{
+  "version": 1,
+  "generated_at": "2026-05-31T18:16:10.082Z",
+  "count": 80,
+  "tools": [
+    {
+      "name": "read_file",
+      "description": "Read a file in the current chat project folder (code/, files/, etc.)",
+      "enabled": true,
+      "source": "builtin",
+      "needsApproval": false
+    },
+    {
+      "name": "write_file",
+      "description": "Write a file in the current chat project folder. Required args: path (relative, e.g. code/asteroids.html), content (full file text). Bare filenames like game.html are stored under code/.",
+      "enabled": true,
+      "source": "builtin",
+      "needsApproval": false
+    },
+    {
+      "name": "list_dir",
+      "description": "List a directory in the current chat project folder",
+      "enabled": true,
+      "source": "builtin",
+      "needsApproval": false
+    },
+    {
+      "name": "delete_file",
+      "description": "Delete a file in the current chat project folder (e.g. media/ copy of a video). Path is relative to the session project. Requires approval.",
+      "enabled": true,
+      "source": "builtin",
+      "needsApproval": true
+    },
+    {
+      "name": "file_info",
+      "description": "Stat a file or folder in the chat project (size, modified time). Args: path.",
+      "enabled": true,
+      "source": "builtin",
+      "needsApproval": false
+    },
+    {
+      "name": "copy_file",
+      "description": "Copy a file within the chat project. Args: src (or from), dest (or to).",
+      "enabled": true,
+      "source": "builtin",
+      "needsApproval": true
+    },
+    {
+      "name": "move_file",
+      "description": "Move/rename a file within the chat project. Args: src (or from), dest (or to).",
+      "enabled": true,
+      "source": "builtin",
+      "needsApproval": true
+    },
+    {
+      "name": "grep_files",
+      "description": "Search file contents in the chat project with a regex. Args: pattern; optional path (subdir), max_files, max_matches.",
+      "enabled": true,
+      "source": "builtin",
+      "needsApproval": false
+    },
+    {
+      "name": "glob_files",
+      "description": "Find files by pattern in the chat project (e.g. **/*.ts). Args: pattern; optional path.",
+      "enabled": true,
+      "source": "builtin",
+      "needsApproval": false
+    },
+    {
+      "name": "run_python",
+      "description": "Execute Python in the unified venv. Args: code (inline) OR path (e.g. code/script.py) with sessionId. Use after write_file to test scripts. Requires approval.",
+      "enabled": true,
+      "source": "builtin",
+      "needsApproval": true
+    },
+    {
+      "name": "run_shell",
+      "description": "Run a shell command and return output in the chat terminal. Args: command (required); optional cwd. Requires shell permission.",
+      "enabled": true,
+      "source": "builtin",
+      "needsApproval": true
+    },
+    {
+      "name": "run_process",
+      "description": "Run a single program with args (no shell). Args: executable; optional argsJson, cwd. Requires shell permission.",
+      "enabled": true,
+      "source": "builtin",
+      "needsApproval": true
+    },
+    {
+      "name": "web_fetch",
+      "description": "HTTP GET a URL (requires web fetch enabled)",
+      "enabled": true,
+      "source": "builtin",
+      "needsApproval": true
+    },
+    {
+      "name": "web_search",
+      "description": "Search the web for a person, topic, or question. Args: query. Requires web fetch in Settings, or use browser_navigate + browser_snapshot.",
+      "enabled": true,
+      "source": "builtin",
+      "needsApproval": true
+    },
+    {
+      "name": "browser_navigate",
+      "description": "Open a URL in the Omega browser (visible in Browser tab)",
+      "enabled": true,
+      "source": "builtin",
+      "needsApproval": true
+    },
+    {
+      "name": "browser_snapshot",
+      "description": "Get URL, title, and visible text from the current browser page",
+      "enabled": true,
+      "source": "builtin",
+      "needsApproval": true
+    },
+    {
+      "name": "image_generate",
+      "description": "Generate an image from a text prompt in the chat session (sessionId, prompt). Uses the chat model when it supports images; otherwise uses the Content Studio image model from Models → Model roles.",
+      "enabled": true,
+      "source": "builtin",
+      "needsApproval": false
+    },
+    {
+      "name": "audio_generate",
+      "description": "Synthesize speech (TTS) from text and show an audio player in chat. Args: sessionId; optional text, tts_voice_gender, tts_language, narration_tone, tts_pitch. Runtime shows voice option cards and a text input when the script is missing.",
+      "enabled": true,
+      "source": "builtin",
+      "needsApproval": false
+    },
+    {
+      "name": "finetune_analyze",
+      "description": "Analyze a base model and get suggested fine-tune modality + hyperparameters",
+      "enabled": true,
+      "source": "builtin",
+      "needsApproval": false
+    },
+    {
+      "name": "finetune_prepare_dataset",
+      "description": "Format dataset files for a fine-tune modality (paths separated by ;)",
+      "enabled": true,
+      "source": "builtin",
+      "needsApproval": true
+    },
+    {
+      "name": "finetune_start",
+      "description": "Create and start a fine-tune job (modelId, sources paths, optional modality)",
+      "enabled": true,
+      "source": "builtin",
+      "needsApproval": true
+    },
+    {
+      "name": "finetune_status",
+      "description": "Get fine-tune job status and recent logs (optional jobId)",
+      "enabled": true,
+      "source": "builtin",
+      "needsApproval": false
+    },
+    {
+      "name": "finetune_stop",
+      "description": "Stop a running fine-tune job",
+      "enabled": true,
+      "source": "builtin",
+      "needsApproval": true
+    },
+    {
+      "name": "content_create_run",
+      "description": "Queue a Content Studio video from chat. Args: theme (required); optional max_duration_seconds when the user stated length. sessionId is auto-injected from the active chat. Runtime shows briefing, script, then GPU mode — never pass project_id, agent_gpu_mode, or briefing_confirmed.",
+      "enabled": true,
+      "source": "builtin",
+      "needsApproval": false
+    },
+    {
+      "name": "content_run_status",
+      "description": "Poll Content Studio job status by job_id.",
+      "enabled": true,
+      "source": "builtin",
+      "needsApproval": false
+    },
+    {
+      "name": "content_delete_project",
+      "description": "Delete a Content Studio video project (DB record). Args: project_id from the chat card, or job_id. Optional delete_storage=true to remove render files on disk. Chat media/: list_dir + delete_file.",
+      "enabled": true,
+      "source": "builtin",
+      "needsApproval": true
+    },
+    {
+      "name": "content_storage_report",
+      "description": "Report Content Studio on-disk storage usage (renders under ~/.omega/.../storage). Optional project_id. No deletion.",
+      "enabled": true,
+      "source": "builtin",
+      "needsApproval": false
+    },
+    {
+      "name": "content_storage_cleanup",
+      "description": "Remove Content Studio render folders on disk. Default dry_run=true. Args: project_id or job_id; or orphans_only=true; or older_than_days=N. Pass dry_run=false and confirm=true to delete.",
+      "enabled": true,
+      "source": "builtin",
+      "needsApproval": true
+    },
+    {
+      "name": "content_free_gpu",
+      "description": "Unload Content Studio generation models from GPU VRAM (TTS / image). Optional reload_chat_model=true to reload the chat model afterward.",
+      "enabled": true,
+      "source": "builtin",
+      "needsApproval": false
+    },
+    {
+      "name": "content_list_projects",
+      "description": "List Content Studio video projects.",
+      "enabled": true,
+      "source": "builtin",
+      "needsApproval": false
+    },
+    {
+      "name": "content_schedule_create",
+      "description": "Create a cron schedule for a project or series. Args: cron_expression, project_id or series_id, optional timezone.",
+      "enabled": true,
+      "source": "builtin",
+      "needsApproval": true
+    },
+    {
+      "name": "content_schedule_list",
+      "description": "List Content Studio publish/generation schedules.",
+      "enabled": true,
+      "source": "builtin",
+      "needsApproval": false
+    },
+    {
+      "name": "content_series_list",
+      "description": "List Content Studio recurring series (theme + episode cadence).",
+      "enabled": true,
+      "source": "builtin",
+      "needsApproval": false
+    },
+    {
+      "name": "content_series_create",
+      "description": "Create a recurring series. Args: title, theme, optional default_max_duration_seconds (e.g. 60 for Shorts).",
+      "enabled": true,
+      "source": "builtin",
+      "needsApproval": true
+    },
+    {
+      "name": "content_social_publish",
+      "description": "Queue cross-platform social post. Args: platform (youtube|tiktok|instagram|x|facebook|linkedin|threads), title, optional caption, project_id, publish_now.",
+      "enabled": true,
+      "source": "builtin",
+      "needsApproval": true
+    },
+    {
+      "name": "content_social_platforms",
+      "description": "List supported social platforms and connection hints.",
+      "enabled": true,
+      "source": "builtin",
+      "needsApproval": false
+    },
+    {
+      "name": "search_local_media",
+      "description": "Smart-search audio/video on this PC (Music, Videos, Downloads, Pictures, configured library — not full-disk unless wide). Args: query; optional folder, audio_only.",
+      "enabled": true,
+      "source": "builtin",
+      "needsApproval": false
+    },
+    {
+      "name": "search_local_files",
+      "description": "Smart-search files by category: audio, video, media, image, code, document, any. Uses OS-typical folders (Music, Videos, project dir for code) before wide scan. Args: query; optional category, folder, wide=true, limit.",
+      "enabled": true,
+      "source": "builtin",
+      "needsApproval": false
+    },
+    {
+      "name": "play_local_media",
+      "description": "Play local audio or video from this PC in the chat media player. Use when the user wants files on disk (Music/Videos/Downloads), said \"locally\"/\"on my PC\", or named a track to find locally. Args: query (title/filename) OR path (from search). Not for vague \"play some music\" — use chat_choice_card first.",
+      "enabled": true,
+      "source": "builtin",
+      "needsApproval": false
+    },
+    {
+      "name": "play_youtube",
+      "description": "Play YouTube in the chat media player (auto-picks top search result). Args: query (song/artist) or url (watch link). Do not send the user to browse results.",
+      "enabled": true,
+      "source": "builtin",
+      "needsApproval": false
+    },
+    {
+      "name": "download_youtube_audio",
+      "description": "Download audio (MP3) from a YouTube link to Music/Omega Downloads. Requires yt-dlp on the PC. Args: url (watch link). Optional: output_dir. After download, use play_local_media with the saved path.",
+      "enabled": true,
+      "source": "builtin",
+      "needsApproval": true
+    },
+    {
+      "name": "media_status",
+      "description": "Get current media player state (local / youtube / idle).",
+      "enabled": true,
+      "source": "builtin",
+      "needsApproval": false
+    },
+    {
+      "name": "media_stop",
+      "description": "Stop the in-app media player overlay.",
+      "enabled": true,
+      "source": "builtin",
+      "needsApproval": false
+    },
+    {
+      "name": "show_chat_media",
+      "description": "Re-open the in-chat media review panel for the latest video in this session (Content Studio MP4 or generated video). Use when the user closed the viewer and wants the video back. Optional job_id.",
+      "enabled": true,
+      "source": "builtin",
+      "needsApproval": false
+    },
+    {
+      "name": "browser_stealth_fetch",
+      "description": "Fetch a URL with headless Chromium (playwright-core) for bot-protected pages.",
+      "enabled": true,
+      "source": "builtin",
+      "needsApproval": true
+    },
+    {
+      "name": "http_request",
+      "description": "HTTP request with method/headers/body",
+      "enabled": true,
+      "source": "builtin",
+      "needsApproval": true
+    },
+    {
+      "name": "clipboard_read",
+      "description": "Read system clipboard text",
+      "enabled": true,
+      "source": "builtin",
+      "needsApproval": false
+    },
+    {
+      "name": "clipboard_write",
+      "description": "Write text to system clipboard",
+      "enabled": true,
+      "source": "builtin",
+      "needsApproval": false
+    },
+    {
+      "name": "datetime",
+      "description": "Get current date/time in system local timezone (optional tz: IANA name e.g. Europe/Lisbon)",
+      "enabled": true,
+      "source": "builtin",
+      "needsApproval": false
+    },
+    {
+      "name": "math",
+      "description": "Evaluate a math expression",
+      "enabled": true,
+      "source": "builtin",
+      "needsApproval": false
+    },
+    {
+      "name": "parse_json",
+      "description": "Parse JSON and optionally extract a dotted path",
+      "enabled": true,
+      "source": "builtin",
+      "needsApproval": false
+    },
+    {
+      "name": "system_info",
+      "description": "OS / CPU / memory / hostname info",
+      "enabled": true,
+      "source": "builtin",
+      "needsApproval": false
+    },
+    {
+      "name": "omega_disk_usage",
+      "description": "Report disk usage for Omega profile areas (Content Studio storage, chat projects, cache, plugins). No deletion.",
+      "enabled": true,
+      "source": "builtin",
+      "needsApproval": false
+    },
+    {
+      "name": "chat_read_cache",
+      "description": "Read cached messages from a chat session. Args: session_id (optional, default active), limit (default 20).",
+      "enabled": true,
+      "source": "builtin",
+      "needsApproval": false
+    },
+    {
+      "name": "chat_manage",
+      "description": "Manage chat sessions: action=list|read|create|rename|delete. Args vary by action (session_id, title, model_id).",
+      "enabled": true,
+      "source": "builtin",
+      "needsApproval": true
+    },
+    {
+      "name": "chat_choice_card",
+      "description": "Show a dynamic choice card in chat. Args: prompt, options (JSON array of {id,label,value,description?}), allow_custom?, multi_select?",
+      "enabled": true,
+      "source": "builtin",
+      "needsApproval": false
+    },
+    {
+      "name": "chat_list",
+      "description": "List all chat sessions (id, title, model). Alias for chat_manage action=list.",
+      "enabled": true,
+      "source": "builtin",
+      "needsApproval": false
+    },
+    {
+      "name": "list_tools",
+      "description": "List all tools you can call (builtin, plugins, MCP). Use first when unsure what Omega can do.",
+      "enabled": true,
+      "source": "builtin",
+      "needsApproval": false
+    },
+    {
+      "name": "omega_capabilities",
+      "description": "Static map of Omega platform areas and which tool to call for each (no live state).",
+      "enabled": true,
+      "source": "builtin",
+      "needsApproval": false
+    },
+    {
+      "name": "plugin_catalog",
+      "description": "List installable Omega plugins that add new tools.",
+      "enabled": true,
+      "source": "builtin",
+      "needsApproval": false
+    },
+    {
+      "name": "install_plugin",
+      "description": "Install a plugin from the built-in catalog. Args: pluginId (from plugin_catalog).",
+      "enabled": true,
+      "source": "builtin",
+      "needsApproval": true
+    },
+    {
+      "name": "search_plugin_catalog",
+      "description": "Search built-in plugin catalog by keyword (args: query).",
+      "enabled": true,
+      "source": "builtin",
+      "needsApproval": false
+    },
+    {
+      "name": "write_plugin",
+      "description": "Author a plugin under ~/.omega/plugins/. Args: pluginId, name, toolsJson (JSON array of {name,description}), source (index.js CommonJS). Optional: description, version, permissions (fetch,fs-read,fs-write,network,subprocess). User must approve in chat.",
+      "enabled": true,
+      "source": "builtin",
+      "needsApproval": true
+    },
+    {
+      "name": "reload_plugins",
+      "description": "Hot-reload all plugins from disk; returns mounted tools (no app restart).",
+      "enabled": true,
+      "source": "builtin",
+      "needsApproval": false
+    },
+    {
+      "name": "extend_capability",
+      "description": "Self-extension flow: record gap → search catalog → install or write_plugin or create_skill. Args: goal, gap; optional pluginId, toolsJson, source, skillName, skillBody. User must approve in chat.",
+      "enabled": true,
+      "source": "builtin",
+      "needsApproval": true
+    },
+    {
+      "name": "list_skills",
+      "description": "List agent skill playbooks (~/.omega/skills).",
+      "enabled": true,
+      "source": "builtin",
+      "needsApproval": false
+    },
+    {
+      "name": "read_skill",
+      "description": "Read full SKILL.md body. Args: skillId.",
+      "enabled": true,
+      "source": "builtin",
+      "needsApproval": false
+    },
+    {
+      "name": "create_skill",
+      "description": "Create a new agent skill playbook. Args: name, body; optional description, category, tags (comma-separated). User must approve in chat.",
+      "enabled": true,
+      "source": "builtin",
+      "needsApproval": true
+    },
+    {
+      "name": "record_capability_gap",
+      "description": "Log a missing capability for future extension. Args: goal, gap; optional suggestion (plugin/skill/tool idea).",
+      "enabled": true,
+      "source": "builtin",
+      "needsApproval": false
+    },
+    {
+      "name": "inference_status",
+      "description": "Full Ωmega inference snapshot: active model, backend (native GGUF / runtime / Ollama), loaded models, GPU, runtime & Ollama processes. Use when asked what model you are or what is running.",
+      "enabled": true,
+      "source": "builtin",
+      "needsApproval": false
+    },
+    {
+      "name": "list_models",
+      "description": "List local GGUF/safetensors models, bundled Ollama models, and configured remote providers. Args: optional limit (default 80).",
+      "enabled": true,
+      "source": "builtin",
+      "needsApproval": false
+    },
+    {
+      "name": "load_model",
+      "description": "Load a model into memory (switch active inference model). Args: modelId (e.g. mymodel.gguf or ollama:llama3). Runs without user prompt — use freely between subtasks.",
+      "enabled": true,
+      "source": "builtin",
+      "needsApproval": false
+    },
+    {
+      "name": "unload_model",
+      "description": "Unload model weights from GPU/RAM. Args: optional modelId (defaults to current active model). Runs without user prompt — free VRAM before heavy jobs.",
+      "enabled": true,
+      "source": "builtin",
+      "needsApproval": false
+    },
+    {
+      "name": "estimate_model_memory",
+      "description": "Estimate GPU/RAM needed to run a GGUF with current config. Args: modelId.",
+      "enabled": true,
+      "source": "builtin",
+      "needsApproval": false
+    },
+    {
+      "name": "delegate_to_agent",
+      "description": "Delegate a subtask to a workforce agent (agentId, task).",
+      "enabled": true,
+      "source": "builtin",
+      "needsApproval": false
+    },
+    {
+      "name": "run_moa",
+      "description": "Mixture-of-agents: parallel drafts + synthesis (task).",
+      "enabled": true,
+      "source": "builtin",
+      "needsApproval": false
+    },
+    {
+      "name": "plan_tasks",
+      "description": "Split a goal into JSON steps [{agentId, task}, …] (goal).",
+      "enabled": true,
+      "source": "builtin",
+      "needsApproval": false
+    },
+    {
+      "name": "search_memory",
+      "description": "Search Omega long-term memory (FTS)",
+      "enabled": true,
+      "source": "builtin",
+      "needsApproval": false
+    },
+    {
+      "name": "search_docs",
+      "description": "Semantic search over indexed RAG documents",
+      "enabled": true,
+      "source": "builtin",
+      "needsApproval": false
+    },
+    {
+      "name": "add_memory",
+      "description": "Save a fact/preference into long-term memory",
+      "enabled": true,
+      "source": "builtin",
+      "needsApproval": false
+    }
+  ]
+}

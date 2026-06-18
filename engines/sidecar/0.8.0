@@ -1,0 +1,24 @@
+Collecting onnxruntime-genai
+  Downloading onnxruntime_genai-0.13.2-cp313-cp313-win_amd64.whl.metadata (690 bytes)
+Collecting numpy>=1.21.6 (from onnxruntime-genai)
+  Using cached numpy-2.4.6-cp313-cp313-win_amd64.whl.metadata (6.6 kB)
+Collecting onnxruntime>=1.25.1 (from onnxruntime-genai)
+  Using cached onnxruntime-1.26.0-cp313-cp313-win_amd64.whl.metadata (5.5 kB)
+Collecting flatbuffers (from onnxruntime>=1.25.1->onnxruntime-genai)
+  Using cached flatbuffers-25.12.19-py2.py3-none-any.whl.metadata (1.0 kB)
+Collecting packaging (from onnxruntime>=1.25.1->onnxruntime-genai)
+  Using cached packaging-26.2-py3-none-any.whl.metadata (3.5 kB)
+Collecting protobuf (from onnxruntime>=1.25.1->onnxruntime-genai)
+  Using cached protobuf-7.35.0-cp310-abi3-win_amd64.whl.metadata (595 bytes)
+Downloading onnxruntime_genai-0.13.2-cp313-cp313-win_amd64.whl (2.7 MB)
+   ---------------------------------------- 2.7/2.7 MB 6.8 MB/s  0:00:00
+
+Using cached numpy-2.4.6-cp313-cp313-win_amd64.whl (12.3 MB)
+Using cached onnxruntime-1.26.0-cp313-cp313-win_amd64.whl (13.0 MB)
+Using cached flatbuffers-25.12.19-py2.py3-none-any.whl (26 kB)
+Using cached packaging-26.2-py3-none-any.whl (100 kB)
+Using cached protobuf-7.35.0-cp310-abi3-win_amd64.whl (439 kB)
+Installing collected packages: flatbuffers, protobuf, packaging, numpy, onnxruntime, onnxruntime-genai
+
+
+Successfully installed flatbuffers-25.12.19 numpy-2.4.6 onnxruntime-1.26.0 onnxruntime-genai-0.13.2 packaging-26.2 protobuf-7.35.0
