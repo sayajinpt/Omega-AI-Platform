@@ -12,6 +12,12 @@ AI was used to help in this project.
 
 this was made by one dude with a estupid AI that broke everything it was suposed to help fix xD ... Contain lots of bugs that i didnt face them yet to know they exist to eventualy fix them..
 
+the models used to test are the models sugested inapp, they are small for testing. 
+
+download your own models for each task and set them for the job.
+
+quality of chat, content, etc.. are limited by the models u use. 
+
 
 Fork it , build on it, make your own improved version. thats the point of all of this.
 
