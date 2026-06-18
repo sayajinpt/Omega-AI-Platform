@@ -176,7 +176,8 @@ std::string synthesize_terminal_tool_success(const std::vector<json>& tool_resul
     const std::string name = it->value("tool", "");
     if (name == "write_file" || name == "read_file" || name == "play_youtube" ||
         name == "play_local_media" || name == "run_shell" || name == "run_python" ||
-        name == "image_generate" || name == "audio_generate" || name == "browser_navigate") {
+        name == "image_generate" || name == "audio_generate" || name == "browser_navigate" ||
+        tool_prose_direct_from_output(name)) {
       return output;
     }
   }
@@ -273,7 +274,7 @@ bool agent_tool_round_is_terminal(const std::vector<json>& tool_results) {
     const std::string name = tr.value("tool", "");
     if (name == "write_file" || name == "play_youtube" || name == "play_local_media" ||
         name == "run_shell" || name == "run_python" || name == "image_generate" ||
-        name == "read_file") {
+        name == "read_file" || tool_prose_direct_from_output(name)) {
       return true;
     }
     if (name == "audio_generate" && tool_result_has_audio_part(tr)) return true;
@@ -359,16 +360,8 @@ std::vector<ToolCall> parse_agent_tool_calls(const std::string& text, const std:
     if (calls.empty() && user_query_implies_tool_action(user_query)) {
       calls = infer_write_file_from_assistant_text(text, user_query);
     }
-    if (calls.empty() && user_query_implies_tool_action(user_query)) {
-      calls = infer_tool_calls_from_user_query(user_query);
-    }
     if (calls.empty()) {
-      static const std::regex needs_context(
-          R"((show|display|see|print|what).{0,32}(code|html|file|created|wrote|made))",
-          std::regex_constants::icase);
-      if (std::regex_search(user_query, needs_context)) {
-        calls = infer_tool_calls_from_user_query(user_query);
-      }
+      calls = infer_tool_calls_from_user_query(user_query);
     }
     return calls;
   } catch (...) {
@@ -794,7 +787,9 @@ json ChatService::finish_agent_turn(const std::string& stream_id, const std::str
                                     const std::vector<json>& tool_results, std::string final_text,
                                     int64_t start_ms, int total_tokens_in, int total_tokens_out) {
   const AssistantMessagePayload merged = build_assistant_payload(final_text, tool_results);
-  final_text = sanitize_assistant_persist_text(merged.content);
+  final_text = resolve_assistant_final_text(final_text, merged, tool_results);
+  AssistantMessagePayload out = merged;
+  out.content = final_text;
   const int64_t gen_ms = std::chrono::duration_cast<std::chrono::milliseconds>(
                              std::chrono::system_clock::now().time_since_epoch())
                              .count() -
@@ -804,7 +799,7 @@ json ChatService::finish_agent_turn(const std::string& stream_id, const std::str
   const int tokens_out =
       total_tokens_out > 0 ? total_tokens_out : estimate_tokens(final_text);
   apply_stream_token_counts(stream_id, tokens_in, tokens_out);
-  const json result = make_chat_result_with_parts(merged, gen_ms, tokens_in, tokens_out);
+  const json result = make_chat_result_with_parts(out, gen_ms, tokens_in, tokens_out);
   if (!session_id.empty()) {
     persist_assistant_message(session_id, final_text, tool_results);
     usage_.record(session_id, model, result.value("tokens_in", 0), result.value("tokens_out", 0));
@@ -1014,11 +1009,7 @@ json ChatService::run_orchestrator_agent_chat(const json& req, const std::string
     try {
       round_result = router_.chat(
           payload, engine_sid,
-          [&](const std::string& text, int) {
-            round_text += text;
-            emit_stream_token(stream_id, text, round_stream_idx++);
-            streamed_any = true;
-          },
+          [&](const std::string& text, int) { round_text += text; },
           on_metrics, 600000);
     } catch (const std::exception& e) {
       finish_active_step();
@@ -1095,8 +1086,9 @@ json ChatService::run_orchestrator_agent_chat(const json& req, const std::string
       finish_active_step();
       final_text = resolve_visible_assistant_text(
           sanitize_assistant_stream_text(strip_tool_fences(round_text)), round_text);
-      if (!final_text.empty() && round_stream_idx == 0) {
-        emit_stream_token(stream_id, final_text, 0);
+      if (!final_text.empty()) {
+        emit_stream_token(stream_id, final_text, round_stream_idx++);
+        streamed_any = true;
       }
       break;
     }
@@ -1303,11 +1295,7 @@ json ChatService::run_universal_agent_tool_loop(const json& req, const std::stri
     try {
       round_result = router_.chat(
           payload, engine_sid,
-          [&](const std::string& text, int) {
-            round_text += text;
-            emit_stream_token(stream_id, text, token_index++);
-            streamed_any = true;
-          },
+          [&](const std::string& text, int) { round_text += text; },
           on_metrics, 600000);
     } catch (const std::exception& e) {
       final_text = std::string("The model stopped responding: ") + e.what();
@@ -1339,8 +1327,9 @@ json ChatService::run_universal_agent_tool_loop(const json& req, const std::stri
       }
       final_text = resolve_visible_assistant_text(
           sanitize_assistant_stream_text(strip_tool_fences(round_text)), round_text);
-      if (!final_text.empty() && round_stream_idx == 0) {
+      if (!final_text.empty()) {
         emit_stream_token(stream_id, final_text, token_index++);
+        streamed_any = true;
       }
       break;
     }

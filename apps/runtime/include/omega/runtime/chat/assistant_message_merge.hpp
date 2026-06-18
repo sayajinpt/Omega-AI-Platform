@@ -15,4 +15,7 @@ struct AssistantMessagePayload {
 AssistantMessagePayload build_assistant_payload(const std::string& prose,
                                                 const std::vector<nlohmann::json>& tool_results);
 
+/** Meta / introspection tools whose text output can be shown directly to the user. */
+bool tool_prose_direct_from_output(const std::string& tool_name);
+
 }  // namespace omega::runtime

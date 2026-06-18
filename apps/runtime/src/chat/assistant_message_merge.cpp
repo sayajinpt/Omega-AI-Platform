@@ -6,6 +6,25 @@ namespace omega::runtime {
 
 namespace {
 
+bool is_introspection_tool(const std::string& name) {
+  static const char* k[] = {"list_tools",
+                            "omega_capabilities",
+                            "inference_status",
+                            "list_models",
+                            "system_info",
+                            "list_skills",
+                            "read_skill",
+                            "search_docs",
+                            "search_memory",
+                            "content_list_projects",
+                            "chat_list",
+                            "web_search"};
+  for (const char* n : k) {
+    if (name == n) return true;
+  }
+  return false;
+}
+
 std::string trim_copy(std::string s) {
   while (!s.empty() && (s.back() == '\n' || s.back() == ' ' || s.back() == '\r')) s.pop_back();
   while (!s.empty() && (s.front() == '\n' || s.front() == ' ' || s.front() == '\r')) s.erase(s.begin());
@@ -185,6 +204,10 @@ void append_tool_status_prose(std::string& content, nlohmann::json& parts, const
 
 }  // namespace
 
+bool tool_prose_direct_from_output(const std::string& tool_name) {
+  return is_introspection_tool(tool_name);
+}
+
 AssistantMessagePayload build_assistant_payload(const std::string& prose,
                                                 const std::vector<nlohmann::json>& tool_results) {
   AssistantMessagePayload out;
@@ -207,6 +230,14 @@ AssistantMessagePayload build_assistant_payload(const std::string& prose,
         fenced = "```text\n" + output + "\n```";
       }
       append_tool_status_prose(out.content, parts, fenced, true);
+    }
+    if (ok && is_introspection_tool(tool_name) && !output.empty()) {
+      std::string block = output;
+      if (block.find("```") == std::string::npos &&
+          !block.empty() && (block.front() == '{' || block.front() == '[')) {
+        block = "```json\n" + output + "\n```";
+      }
+      append_tool_status_prose(out.content, parts, block, true);
     }
     if (ok && (tool_name == "play_youtube" || tool_name == "play_local_media" ||
                tool_name == "run_shell" || tool_name == "run_python" ||
