@@ -8,7 +8,10 @@ export function ProvidersPage() {
   const [editing, setEditing] = useState<RemoteProvider | null>(null)
 
   const reload = useCallback(async () => {
-    setProviders(await engineClient.providers.list())
+    const rows = await engineClient.providers.list()
+    setProviders(rows)
+    setEditing((prev) => (prev ? rows.find((p) => p.id === prev.id) ?? prev : null))
+    return rows
   }, [])
 
   useEffect(() => {
@@ -103,6 +106,7 @@ export function ProvidersPage() {
         ) : (
           <ProviderEditor
             value={editing}
+            onReload={reload}
             onSave={async (v) => {
               const saved = await engineClient.providers.save(v)
               setEditing(saved)
@@ -129,12 +133,14 @@ function ProviderEditor({
   value,
   onSave,
   onDelete,
-  onUseInChat
+  onUseInChat,
+  onReload
 }: {
   value: RemoteProvider
   onSave: (v: RemoteProvider) => void | Promise<void>
   onDelete: () => void
   onUseInChat: (qualifiedModelId: string) => void | Promise<void>
+  onReload: () => void | Promise<void>
 }) {
   const [v, setV] = useState<RemoteProvider>(value)
   const [catalog, setCatalog] = useState<string[]>(value.models ?? [])
@@ -160,19 +166,28 @@ function ProviderEditor({
     setFetchBusy(true)
     setFetchError(null)
     try {
-      const res = await engineClient.providers.fetchModels(v.id, persist)
+      const res = await engineClient.providers.fetchModels({
+        id: v.id,
+        persist,
+        apiKey: v.apiKey,
+        baseUrl: v.baseUrl,
+        kind: v.kind
+      })
       if (res.error) setFetchError(res.error)
       if (res.models.length) {
         setCatalog(res.models)
         setSelected(new Set(res.models))
         if (persist) {
-          setV((prev) => ({
-            ...prev,
+          const next = {
+            ...v,
             models: res.models,
-            defaultModel: prev.defaultModel && res.models.includes(prev.defaultModel)
-              ? prev.defaultModel
-              : res.models[0]
-          }))
+            defaultModel:
+              v.defaultModel && res.models.includes(v.defaultModel)
+                ? v.defaultModel
+                : res.models[0]
+          }
+          setV(next)
+          await onReload()
         }
       } else if (!res.error) {
         setFetchError('No models returned — check API key and base URL.')

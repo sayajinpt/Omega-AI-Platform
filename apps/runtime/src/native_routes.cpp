@@ -1357,6 +1357,7 @@ void register_native_routes(httplib::Server& svr, const NativeRouteDeps& deps) {
       const json input = args.size() > 0 && args[0].is_object() ? args[0] : parse_body(req);
       json_ok(res, providers.save(input));
       events.publish("omega:providers:changed", json::object());
+      events.publish("omega:models:inventoryChanged", json::object());
     } catch (const std::exception& e) {
       json_err(res, 500, e.what());
     }
@@ -1375,14 +1376,27 @@ void register_native_routes(httplib::Server& svr, const NativeRouteDeps& deps) {
   };
   register_post_and_delete(svr, "/v1/providers/delete", delete_provider);
 
-  svr.Post("/v1/providers/fetchModels", [&providers](const httplib::Request& req, httplib::Response& res) {
+  svr.Post("/v1/providers/fetchModels", [&providers, &events](const httplib::Request& req, httplib::Response& res) {
     try {
       const json body = parse_body(req);
       const json args = args_from_body(req);
-      const std::string id = arg_string(args, 0, body.value("id", ""));
-      const bool persist = body.value("persist", false);
+      const std::string id =
+          body.is_object() ? body.value("id", "") : arg_string(args, 0, "");
+      const bool persist = body.is_object()
+                               ? body.value("persist", false)
+                               : (args.is_array() && args.size() > 1 && args[1].is_boolean() &&
+                                  args[1].get<bool>());
       if (id.empty()) throw std::runtime_error("id required");
-      json_ok(res, providers.fetch_models(id, persist));
+      json overlay = body.is_object() ? body : json::object();
+      if (overlay.is_object()) {
+        overlay.erase("id");
+        overlay.erase("persist");
+      }
+      json_ok(res, providers.fetch_models(id, persist, overlay));
+      if (persist) {
+        events.publish("omega:providers:changed", json::object());
+        events.publish("omega:models:inventoryChanged", json::object());
+      }
     } catch (const std::exception& e) {
       json_err(res, 500, e.what());
     }

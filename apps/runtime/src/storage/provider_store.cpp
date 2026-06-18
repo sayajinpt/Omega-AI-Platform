@@ -83,7 +83,32 @@ std::optional<std::pair<json, std::string>> ProviderStore::resolve_model(
   return std::nullopt;
 }
 
-json ProviderStore::fetch_models(const std::string& id, bool should_persist) {
+namespace {
+
+json merge_provider_overlay(const json& base, const json& overlay) {
+  json out = base;
+  if (!overlay.is_object()) return out;
+  for (auto it = overlay.begin(); it != overlay.end(); ++it) {
+    if (it.key() == "id" || it.key() == "persist") continue;
+    if (it.value().is_null()) continue;
+    out[it.key()] = it.value();
+  }
+  return out;
+}
+
+void apply_overlay_fields(json& provider, const json& overlay) {
+  if (!overlay.is_object()) return;
+  for (auto it = overlay.begin(); it != overlay.end(); ++it) {
+    if (it.key() == "id" || it.key() == "persist") continue;
+    if (it.value().is_null()) continue;
+    provider[it.key()] = it.value();
+  }
+}
+
+}  // namespace
+
+json ProviderStore::fetch_models(const std::string& id, bool should_persist,
+                                 const json& overlay) {
   json rows = load_all();
   json* provider = nullptr;
   for (auto& r : rows) {
@@ -94,17 +119,25 @@ json ProviderStore::fetch_models(const std::string& id, bool should_persist) {
   }
   if (!provider) return json{{"models", json::array()}, {"error", "Provider not found"}};
 
-  const std::string kind = provider->value("kind", "openai");
-  if (kind != "ollama" && kind != "lmstudio" && provider->value("apiKey", "").empty()) {
+  const json effective = merge_provider_overlay(*provider, overlay);
+  const std::string kind = effective.value("kind", "openai");
+  if (kind != "ollama" && kind != "lmstudio" && effective.value("apiKey", "").empty()) {
     return json{{"models", provider->value("models", json::array())},
                 {"error", "Add an API key first"}};
   }
 
   try {
-    const json models = remote_list_models(*provider);
-    if (should_persist && models.is_array() && !models.empty()) {
-      (*provider)["models"] = models;
-      if (!provider->contains("defaultModel")) (*provider)["defaultModel"] = models[0];
+    const json models = remote_list_models(effective);
+    if (should_persist) {
+      apply_overlay_fields(*provider, overlay);
+      if (models.is_array() && !models.empty()) {
+        (*provider)["models"] = models;
+        if (!provider->contains("defaultModel") ||
+            !(*provider)["defaultModel"].is_string() ||
+            (*provider)["defaultModel"].get<std::string>().empty()) {
+          (*provider)["defaultModel"] = models[0];
+        }
+      }
       persist(rows);
     }
     return json{{"models", models.is_array() ? models : json::array()}};
@@ -192,6 +225,33 @@ json ProviderStore::presets() const {
            {"kind", "custom-openai"},
            {"baseUrl", "http://127.0.0.1:8000"},
            {"enabled", false}}});
+}
+
+json ProviderStore::models_for_chat() const {
+  json out = json::array();
+  for (const auto& p : load_all()) {
+    if (!p.value("enabled", true)) continue;
+    const std::string pid = p.value("id", "");
+    if (pid.empty()) continue;
+    const std::string pname = p.value("name", pid);
+    const json models =
+        p.contains("models") && p["models"].is_array() ? p["models"] : json::array();
+    for (const auto& m : models) {
+      if (!m.is_string()) continue;
+      const std::string mid = m.get<std::string>();
+      if (mid.empty()) continue;
+      const std::string qid = pid + "/" + mid;
+      out.push_back(json{{"id", qid},
+                         {"path", ""},
+                         {"size_bytes", 0},
+                         {"remote", true},
+                         {"inferenceBackend", "remote"},
+                         {"displayName", pname + ": " + mid},
+                         {"metadata", json::object()},
+                         {"providerId", pid}});
+    }
+  }
+  return out;
 }
 
 json ProviderStore::discover_all() {

@@ -16,9 +16,12 @@ class ProviderStore {
   nlohmann::json list();
   nlohmann::json save(const nlohmann::json& input);
   void remove(const std::string& id);
-  nlohmann::json fetch_models(const std::string& id, bool should_persist = false);
+  nlohmann::json fetch_models(const std::string& id, bool should_persist = false,
+                              const nlohmann::json& overlay = nlohmann::json::object());
   nlohmann::json presets() const;
   nlohmann::json discover_all();
+  /** Enabled providers' saved model ids as chat picker entries (no live API fetch). */
+  nlohmann::json models_for_chat() const;
   std::optional<std::pair<nlohmann::json, std::string>> resolve_model(
       const std::string& qualified_model_id) const;
 

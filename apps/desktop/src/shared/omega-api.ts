@@ -523,11 +523,14 @@ export function createOmegaApi(bridge: OmegaRuntimeBridge) {
     presets: (): Promise<RemoteProvider[]> => bridge.invoke(IPC.providersPresets),
     discover: (): Promise<Array<{ providerId: string; modelId: string; displayName: string }>> =>
       bridge.invoke(IPC.providersDiscover),
-    fetchModels: (
-      providerId: string,
+    fetchModels: (req: {
+      id: string
       persist?: boolean
-    ): Promise<{ models: string[]; error?: string }> =>
-      bridge.invoke(IPC.providersFetchModels, providerId, persist),
+      apiKey?: string
+      baseUrl?: string
+      kind?: string
+    }): Promise<{ models: string[]; error?: string }> =>
+      bridge.invoke(IPC.providersFetchModels, req),
     onChanged: (cb: () => void) => {
       const fn = () => cb()
       bridge.on(IPC.providersChanged, fn)

@@ -774,6 +774,23 @@ void RuntimeContext::register_routes(httplib::Server& svr) {
           if (!replaced) data["models"].push_back(entry);
         }
       }
+      const json provider_models = providers_.models_for_chat();
+      if (provider_models.is_array()) {
+        for (const auto& entry : provider_models) {
+          if (!entry.is_object()) continue;
+          const std::string id = entry.value("id", "");
+          if (id.empty()) continue;
+          bool replaced = false;
+          for (auto& m : data["models"]) {
+            if (m.is_object() && m.value("id", "") == id) {
+              m = entry;
+              replaced = true;
+              break;
+            }
+          }
+          if (!replaced) data["models"].push_back(entry);
+        }
+      }
       res.set_content(data.dump(), "application/json");
     } catch (const std::exception& e) {
       res.status = 503;

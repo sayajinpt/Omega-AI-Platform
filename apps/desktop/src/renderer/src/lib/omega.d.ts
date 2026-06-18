@@ -381,7 +381,13 @@ export interface OmegaApi {
     delete: (id: string) => Promise<void>
     presets: () => Promise<RemoteProvider[]>
     discover: () => Promise<Array<{ providerId: string; modelId: string; displayName: string }>>
-    fetchModels: (providerId: string, persist?: boolean) => Promise<{ models: string[]; error?: string }>
+    fetchModels: (req: {
+      id: string
+      persist?: boolean
+      apiKey?: string
+      baseUrl?: string
+      kind?: string
+    }) => Promise<{ models: string[]; error?: string }>
     onChanged: (cb: () => void) => () => void
   }
   gateway: {
