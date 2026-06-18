@@ -81,6 +81,30 @@ HttpResponse get(const std::string& url, const RequestOptions& opts) {
 #endif
 }
 
+HttpResponse post(const std::string& url, const std::string& body, const RequestOptions& opts) {
+  const UrlParts parts = parse(url);
+#ifdef CPPHTTPLIB_OPENSSL_SUPPORT
+  httplib::Client cli(parts.host, parts.port);
+  cli.set_connection_timeout(opts.connection_timeout_sec, 0);
+  cli.set_read_timeout(opts.read_timeout_sec, 0);
+  cli.set_follow_location(opts.follow_redirects);
+  if (parts.ssl) cli.enable_server_certificate_verification(true);
+  const auto res =
+      cli.Post(parts.path.c_str(), to_httplib_headers(opts.headers), body, "application/json");
+  if (!res) throw std::runtime_error("HTTPS POST failed");
+  return {res->status, res->body};
+#else
+  if (parts.ssl) require_ssl();
+  httplib::Client cli(parts.host, parts.port);
+  cli.set_connection_timeout(opts.connection_timeout_sec, 0);
+  cli.set_read_timeout(opts.read_timeout_sec, 0);
+  const auto res =
+      cli.Post(parts.path.c_str(), to_httplib_headers(opts.headers), body, "application/json");
+  if (!res) throw std::runtime_error("HTTP POST failed");
+  return {res->status, res->body};
+#endif
+}
+
 HttpResponse get_stream(const std::string& url, const RequestOptions& opts, ChunkCallback on_chunk,
                         ProgressCallback on_progress) {
   const UrlParts parts = parse(url);
@@ -99,6 +123,33 @@ HttpResponse get_stream(const std::string& url, const RequestOptions& opts, Chun
         return true;
       });
   if (!res) throw std::runtime_error("HTTPS download failed");
+  out.status = res->status;
+  return out;
+#else
+  if (parts.ssl) require_ssl();
+  throw std::runtime_error("HTTPS streaming requires OpenSSL-enabled httplib build");
+#endif
+}
+
+HttpResponse post_stream(const std::string& url, const std::string& body,
+                         const RequestOptions& opts, ChunkCallback on_chunk) {
+  const UrlParts parts = parse(url);
+#ifdef CPPHTTPLIB_OPENSSL_SUPPORT
+  httplib::Client cli(parts.host, parts.port);
+  cli.set_connection_timeout(opts.connection_timeout_sec, 0);
+  cli.set_read_timeout(opts.read_timeout_sec, 0);
+  if (parts.ssl) cli.enable_server_certificate_verification(true);
+  HttpResponse out;
+  httplib::Request req;
+  req.method = "POST";
+  req.path = parts.path;
+  for (const auto& [k, v] : opts.headers) req.set_header(k, v);
+  req.body = body;
+  req.content_receiver = [&](const char* data, size_t len, uint64_t, uint64_t) {
+    return on_chunk(data, len);
+  };
+  const auto res = cli.send(req);
+  if (!res) throw std::runtime_error("HTTPS POST stream failed");
   out.status = res->status;
   return out;
 #else

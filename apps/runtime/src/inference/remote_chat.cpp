@@ -3,9 +3,11 @@
 #include "omega/runtime/chat/media_encode.hpp"
 #include "omega/runtime/inference/chat_usage.hpp"
 #include "omega/runtime/inference/sse_stream.hpp"
+#include "omega/runtime/net/https_client.hpp"
 
 #include <chrono>
 #include <httplib.h>
+#include <map>
 #include <regex>
 
 using json = nlohmann::json;
@@ -19,6 +21,16 @@ std::string trim_slash(std::string url) {
   return url;
 }
 
+bool is_https_base(const std::string& base) {
+  return base.rfind("https://", 0) == 0;
+}
+
+std::map<std::string, std::string> headers_to_map(const httplib::Headers& headers) {
+  std::map<std::string, std::string> out;
+  for (const auto& h : headers) out.emplace(h.first, h.second);
+  return out;
+}
+
 httplib::Headers auth_headers(const json& provider) {
   httplib::Headers h{{"Content-Type", "application/json"}};
   if (provider.contains("headers") && provider["headers"].is_object()) {
@@ -29,7 +41,9 @@ httplib::Headers auth_headers(const json& provider) {
   const std::string id = provider.value("id", "");
   const std::string base = provider.value("baseUrl", "");
   if (id == "openrouter" || base.find("openrouter.ai") != std::string::npos) {
-    if (!h.count("HTTP-Referer")) h.emplace("HTTP-Referer", "https://github.com/omega-ai/omega");
+    if (!h.count("Referer") && !h.count("HTTP-Referer")) {
+      h.emplace("Referer", "https://github.com/sayajinpt/Omega-AI-Platform");
+    }
     if (!h.count("X-Title")) h.emplace("X-Title", "Omega");
   }
   const std::string key = provider.value("apiKey", "");
@@ -40,6 +54,7 @@ httplib::Headers auth_headers(const json& provider) {
     h.emplace("anthropic-version", "2023-06-01");
   } else {
     h.emplace("Authorization", "Bearer " + key);
+    if (!h.count("Accept")) h.emplace("Accept", "text/event-stream");
   }
   return h;
 }
@@ -100,13 +115,18 @@ json anthropic_chat(const json& provider, const std::string& model, const json& 
   if (!system_text.empty()) body["system"] = system_text;
 
   const std::string base = trim_slash(provider.value("baseUrl", ""));
-  httplib::Client cli(base);
-  cli.set_connection_timeout(15, 0);
-  cli.set_read_timeout(600, 0);
+  const auto hdrs = auth_headers(provider);
+  const std::string url = base + "/v1/messages";
 
   AnthropicSseAccum acc;
-  stream_anthropic_sse_post(cli, "/v1/messages", auth_headers(provider), body.dump(), acc,
-                          on_token);
+  if (is_https_base(base)) {
+    stream_anthropic_sse_post_url(url, headers_to_map(hdrs), body.dump(), acc, on_token);
+  } else {
+    httplib::Client cli(base);
+    cli.set_connection_timeout(15, 0);
+    cli.set_read_timeout(600, 0);
+    stream_anthropic_sse_post(cli, "/v1/messages", hdrs, body.dump(), acc, on_token);
+  }
 
   const int64_t gen_ms = std::chrono::duration_cast<std::chrono::milliseconds>(
                              std::chrono::system_clock::now().time_since_epoch())
@@ -119,12 +139,34 @@ json anthropic_chat(const json& provider, const std::string& model, const json& 
 
 json remote_list_models(const json& provider) {
   const std::string base = trim_slash(provider.value("baseUrl", ""));
+  const std::string path =
+      provider.value("kind", "") == "anthropic" ? "/v1/models" : "/v1/models";
+  const auto hdrs = auth_headers(provider);
+
+  if (is_https_base(base)) {
+    https::RequestOptions opts;
+    opts.headers = headers_to_map(hdrs);
+    opts.connection_timeout_sec = 10;
+    opts.read_timeout_sec = 30;
+    const https::HttpResponse res = https::get(base + path, opts);
+    if (res.status < 200 || res.status >= 300) {
+      throw std::runtime_error("Provider models HTTP " + std::to_string(res.status) + ": " +
+                               res.body.substr(0, 200));
+    }
+    const json body = json::parse(res.body);
+    json out = json::array();
+    if (body.contains("data") && body["data"].is_array()) {
+      for (const auto& m : body["data"]) {
+        if (m.contains("id") && m["id"].is_string()) out.push_back(m["id"]);
+      }
+    }
+    return out;
+  }
+
   httplib::Client cli(base);
   cli.set_connection_timeout(10, 0);
   cli.set_read_timeout(30, 0);
-  const std::string path =
-      provider.value("kind", "") == "anthropic" ? "/v1/models" : "/v1/models";
-  const auto res = cli.Get(path.c_str(), auth_headers(provider));
+  const auto res = cli.Get(path.c_str(), hdrs);
   if (!res) throw std::runtime_error("Failed to reach provider models API");
   if (res->status < 200 || res->status >= 300) {
     throw std::runtime_error("Provider models HTTP " + std::to_string(res->status) + ": " +
@@ -163,16 +205,21 @@ json remote_chat(const json& provider, const std::string& model, const json& pay
                   {"max_tokens", sampling.value("max_tokens", 2048)}};
 
   const std::string base = trim_slash(provider.value("baseUrl", ""));
-  httplib::Client cli(base);
-  cli.set_connection_timeout(15, 0);
-  cli.set_read_timeout(600, 0);
+  const auto hdrs = auth_headers(provider);
+  const std::string url = base + "/v1/chat/completions";
 
   OpenAiSseAccum acc;
   int64_t first_token_ms = 0;
   const ChatTokenCallback wrapped =
       wrap_stream_metrics(std::move(on_token), on_metrics, acc, start, first_token_ms);
-  stream_openai_sse_post(cli, "/v1/chat/completions", auth_headers(provider), body.dump(), acc,
-                         wrapped);
+  if (is_https_base(base)) {
+    stream_openai_sse_post_url(url, headers_to_map(hdrs), body.dump(), acc, wrapped);
+  } else {
+    httplib::Client cli(base);
+    cli.set_connection_timeout(15, 0);
+    cli.set_read_timeout(600, 0);
+    stream_openai_sse_post(cli, "/v1/chat/completions", hdrs, body.dump(), acc, wrapped);
+  }
 
   const int64_t gen_ms = std::chrono::duration_cast<std::chrono::milliseconds>(
                              std::chrono::system_clock::now().time_since_epoch())

@@ -139,11 +139,13 @@ std::string absolute_redirect_url(const std::string& base_url, const std::wstrin
   return prefix + loc;
 }
 
-HttpResponse execute_stream(const std::string& url, const RequestOptions& opts,
-                            const ChunkCallback& on_chunk, const ProgressCallback& on_progress,
-                            bool collect_body) {
+HttpResponse execute_request(const std::string& method, const std::string& url,
+                             const RequestOptions& opts, const std::string& body,
+                             const ChunkCallback& on_chunk, const ProgressCallback& on_progress,
+                             bool collect_body) {
   std::string current_url = url;
   HttpResponse out;
+  const std::wstring wmethod = widen(method);
 
   for (int redirect = 0; redirect < 12; ++redirect) {
     const ParsedUrl parsed = parse_url(current_url);
@@ -166,8 +168,8 @@ HttpResponse execute_stream(const std::string& url, const RequestOptions& opts,
     }
 
     HINTERNET request =
-        WinHttpOpenRequest(connect, L"GET", parsed.path.c_str(), nullptr, WINHTTP_NO_REFERER,
-                           WINHTTP_DEFAULT_ACCEPT_TYPES, flags);
+        WinHttpOpenRequest(connect, wmethod.c_str(), parsed.path.c_str(), nullptr,
+                           WINHTTP_NO_REFERER, WINHTTP_DEFAULT_ACCEPT_TYPES, flags);
     if (!request) {
       WinHttpCloseHandle(connect);
       WinHttpCloseHandle(session);
@@ -178,12 +180,16 @@ HttpResponse execute_stream(const std::string& url, const RequestOptions& opts,
     const wchar_t* hdr_ptr = hdrs.empty() ? WINHTTP_NO_ADDITIONAL_HEADERS : hdrs.c_str();
     const DWORD hdr_len = hdrs.empty() ? 0 : static_cast<DWORD>(-1);
 
-    if (!WinHttpSendRequest(request, hdr_ptr, hdr_len, WINHTTP_NO_REQUEST_DATA, 0, 0, 0) ||
+    const void* body_ptr = body.empty() ? WINHTTP_NO_REQUEST_DATA : body.data();
+    const DWORD body_len = static_cast<DWORD>(body.size());
+
+    if (!WinHttpSendRequest(request, hdr_ptr, hdr_len, const_cast<void*>(body_ptr), body_len,
+                            body_len, 0) ||
         !WinHttpReceiveResponse(request, nullptr)) {
       WinHttpCloseHandle(request);
       WinHttpCloseHandle(connect);
       WinHttpCloseHandle(session);
-      throw std::runtime_error("HTTPS request failed");
+      throw std::runtime_error("HTTPS " + method + " request failed");
     }
 
     DWORD status = 0;
@@ -203,6 +209,15 @@ HttpResponse execute_stream(const std::string& url, const RequestOptions& opts,
     }
 
     if (status < 200 || status >= 300) {
+      std::vector<char> err_buf(16 * 1024);
+      for (;;) {
+        DWORD avail = 0;
+        if (!WinHttpQueryDataAvailable(request, &avail) || avail == 0) break;
+        if (avail > err_buf.size()) err_buf.resize(avail);
+        DWORD read = 0;
+        if (!WinHttpReadData(request, err_buf.data(), avail, &read) || read == 0) break;
+        out.body.append(err_buf.data(), read);
+      }
       WinHttpCloseHandle(request);
       WinHttpCloseHandle(connect);
       WinHttpCloseHandle(session);
@@ -249,12 +264,21 @@ HttpResponse execute_stream(const std::string& url, const RequestOptions& opts,
 }  // namespace
 
 HttpResponse get(const std::string& url, const RequestOptions& opts) {
-  return execute_stream(url, opts, nullptr, nullptr, true);
+  return execute_request("GET", url, opts, "", nullptr, nullptr, true);
+}
+
+HttpResponse post(const std::string& url, const std::string& body, const RequestOptions& opts) {
+  return execute_request("POST", url, opts, body, nullptr, nullptr, true);
 }
 
 HttpResponse get_stream(const std::string& url, const RequestOptions& opts, ChunkCallback on_chunk,
                         ProgressCallback on_progress) {
-  return execute_stream(url, opts, std::move(on_chunk), std::move(on_progress), false);
+  return execute_request("GET", url, opts, "", std::move(on_chunk), std::move(on_progress), false);
+}
+
+HttpResponse post_stream(const std::string& url, const std::string& body,
+                         const RequestOptions& opts, ChunkCallback on_chunk) {
+  return execute_request("POST", url, opts, body, std::move(on_chunk), nullptr, false);
 }
 
 }  // namespace omega::runtime::https

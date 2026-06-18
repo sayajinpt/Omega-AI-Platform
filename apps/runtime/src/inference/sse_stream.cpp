@@ -1,5 +1,7 @@
 #include "omega/runtime/inference/sse_stream.hpp"
 
+#include "omega/runtime/net/https_client.hpp"
+
 #include <stdexcept>
 
 using json = nlohmann::json;
@@ -118,6 +120,40 @@ void stream_openai_sse_post(httplib::Client& cli, const std::string& path,
   }
 }
 
+void stream_openai_sse_post_url(const std::string& url,
+                                const std::map<std::string, std::string>& headers,
+                                const std::string& body, OpenAiSseAccum& acc,
+                                ChatTokenCallback on_token) {
+  std::string pending;
+  int index = 0;
+  https::RequestOptions opts;
+  opts.headers = headers;
+  opts.connection_timeout_sec = 15;
+  opts.read_timeout_sec = 600;
+  const auto res = https::post_stream(url, body, opts, [&](const char* data, size_t len) {
+    pending.append(data, len);
+    for (;;) {
+      const auto nl = pending.find('\n');
+      if (nl == std::string::npos) break;
+      std::string line = pending.substr(0, nl);
+      pending.erase(0, nl + 1);
+      if (!feed_openai_sse_line(line, acc, on_token, index)) {
+        throw std::runtime_error("chat stream aborted");
+      }
+    }
+    return true;
+  });
+  if (res.status < 200 || res.status >= 300) {
+    throw std::runtime_error("HTTP " + std::to_string(res.status) + ": " +
+                             res.body.substr(0, 280));
+  }
+  if (!pending.empty()) {
+    if (!feed_openai_sse_line(pending, acc, on_token, index)) {
+      throw std::runtime_error("chat stream aborted");
+    }
+  }
+}
+
 bool feed_anthropic_sse_line(std::string line, AnthropicSseAccum& acc, ChatTokenCallback on_token,
                              int& index) {
   const std::string payload = sse_payload_from_line(std::move(line));
@@ -177,6 +213,40 @@ void stream_anthropic_sse_post(httplib::Client& cli, const std::string& path,
   if (res->status < 200 || res->status >= 300) {
     throw std::runtime_error("Anthropic HTTP " + std::to_string(res->status) + ": " +
                              res->body.substr(0, 280));
+  }
+  if (!pending.empty()) {
+    if (!feed_anthropic_sse_line(pending, acc, on_token, index)) {
+      throw std::runtime_error("anthropic stream aborted");
+    }
+  }
+}
+
+void stream_anthropic_sse_post_url(const std::string& url,
+                                   const std::map<std::string, std::string>& headers,
+                                   const std::string& body, AnthropicSseAccum& acc,
+                                   ChatTokenCallback on_token) {
+  std::string pending;
+  int index = 0;
+  https::RequestOptions opts;
+  opts.headers = headers;
+  opts.connection_timeout_sec = 15;
+  opts.read_timeout_sec = 600;
+  const auto res = https::post_stream(url, body, opts, [&](const char* data, size_t len) {
+    pending.append(data, len);
+    for (;;) {
+      const auto nl = pending.find('\n');
+      if (nl == std::string::npos) break;
+      std::string line = pending.substr(0, nl);
+      pending.erase(0, nl + 1);
+      if (!feed_anthropic_sse_line(line, acc, on_token, index)) {
+        throw std::runtime_error("anthropic stream aborted");
+      }
+    }
+    return true;
+  });
+  if (res.status < 200 || res.status >= 300) {
+    throw std::runtime_error("Anthropic HTTP " + std::to_string(res.status) + ": " +
+                             res.body.substr(0, 280));
   }
   if (!pending.empty()) {
     if (!feed_anthropic_sse_line(pending, acc, on_token, index)) {

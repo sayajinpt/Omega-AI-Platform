@@ -4,6 +4,7 @@
 
 #include <functional>
 #include <httplib.h>
+#include <map>
 #include <nlohmann/json.hpp>
 #include <string>
 
@@ -31,6 +32,12 @@ void stream_openai_sse_post(httplib::Client& cli, const std::string& path,
                             const httplib::Headers& headers, const std::string& body,
                             OpenAiSseAccum& acc, ChatTokenCallback on_token);
 
+/** Same as stream_openai_sse_post but uses omega::runtime::https (WinHTTP on Windows). */
+void stream_openai_sse_post_url(const std::string& url,
+                                const std::map<std::string, std::string>& headers,
+                                const std::string& body, OpenAiSseAccum& acc,
+                                ChatTokenCallback on_token);
+
 struct AnthropicSseAccum {
   std::string text;
   int tokens_in{0};
@@ -43,6 +50,11 @@ bool feed_anthropic_sse_line(std::string line, AnthropicSseAccum& acc, ChatToken
 void stream_anthropic_sse_post(httplib::Client& cli, const std::string& path,
                                const httplib::Headers& headers, const std::string& body,
                                AnthropicSseAccum& acc, ChatTokenCallback on_token);
+
+void stream_anthropic_sse_post_url(const std::string& url,
+                                   const std::map<std::string, std::string>& headers,
+                                   const std::string& body, AnthropicSseAccum& acc,
+                                   ChatTokenCallback on_token);
 
 /** Ollama native /api/chat — newline-delimited JSON (not SSE). */
 void stream_ollama_ndjson_post(httplib::Client& cli, const std::string& path,
