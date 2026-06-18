@@ -515,6 +515,37 @@ void collect_gemma4_tool_calls(const std::string& text, std::vector<ToolCallMatc
   }
 }
 
+/** LongCat / Owl Alpha: <longcat_tool_call>list_tools</longcat_tool_call> or JSON inside. */
+void collect_longcat_tool_calls(const std::string& text, std::vector<ToolCallMatch>& out) {
+  static const std::regex block_re(R"(<longcat_tool_call>([\s\S]*?)</longcat_tool_call>)",
+                                   std::regex_constants::icase);
+  append_regex_matches(
+      text, block_re,
+      [&](const std::smatch& m) -> ToolCallMatch {
+        ToolCallMatch match;
+        match.start = static_cast<size_t>(m.position(0));
+        match.end = match.start + m.length(0);
+        std::string inner = trim_copy(m[1].str());
+        if (inner.empty()) return match;
+        if (auto parsed = try_parse_tool_json(inner)) {
+          match.call = *parsed;
+        } else {
+          const size_t nl = inner.find('\n');
+          if (nl != std::string::npos) {
+            match.call.name = trim_copy(inner.substr(0, nl));
+            if (auto args = try_parse_tool_json(inner.substr(nl))) {
+              match.call.args = args->args;
+            }
+          } else {
+            match.call.name = inner;
+          }
+          match.call = normalize_call(std::move(match.call));
+        }
+        return match;
+      },
+      out);
+}
+
 void collect_kimi_tool_calls(const std::string& text, std::vector<ToolCallMatch>& out) {
   static const std::regex re(
       R"(<\|(?:redacted_)?tool_call_begin_kimi\|>functions\.([a-zA-Z0-9_]+):\d+<\|(?:redacted_)?tool_call_argument_begin\|>([\s\S]*?)(?:<\|(?:redacted_)?tool_call_end_kimi\|>|$))",
@@ -684,6 +715,7 @@ void collect_all_tool_call_matches(const std::string& text, std::vector<ToolCall
   collect_fenced_tool_calls(text, out);
   collect_qwen_xml_tool_calls(text, out);
   collect_gemma4_tool_calls(text, out);
+  collect_longcat_tool_calls(text, out);
   collect_kimi_tool_calls(text, out);
   collect_lfm2_tool_calls(text, out);
   collect_functionary_tool_calls(text, out);
@@ -1014,6 +1046,15 @@ std::vector<ToolCall> infer_tool_calls_from_user_query(const std::string& user_q
     return finalize_tool_calls({call}, "", user_query);
   }
 
+  static const std::regex list_tools_query(
+      R"(\b(list|show|tell|what are|enumerate|name).{0,48}\b(tools|capabilities|functions)\b|\bavailable tools\b|\btools in (?:the )?omega\b)",
+      std::regex_constants::icase);
+  if (std::regex_search(user_query, list_tools_query)) {
+    ToolCall call;
+    call.name = "list_tools";
+    return finalize_tool_calls({call}, "", user_query);
+  }
+
   static const std::regex needs_context(
       R"((show|display|see|print|what).{0,32}(code|html|file|created|wrote|made)|\b(that|it|same|earlier|previous|before)\b)",
       std::regex_constants::icase);
@@ -1033,6 +1074,8 @@ std::string strip_tool_fences(const std::string& text) {
   std::string out = text;
   out = strip(out, std::regex(R"(```tool[\s\S]*?```)", std::regex_constants::icase));
   out = strip(out, std::regex(R"pat(```tool[\s\S]*$)pat", std::regex_constants::icase));
+  out = strip(out, std::regex(R"(<longcat_tool_call>[\s\S]*?</longcat_tool_call>)",
+                              std::regex_constants::icase));
   out = strip(out, std::regex(R"(<(?:\|)?tool_call(?:\|)?>[\s\S]*?</(?:\|)?tool_call(?:\|)?>)",
                               std::regex_constants::icase));
   out = strip(out, std::regex(R"(<\|tool_call>call:[\s\S]*?<tool_call\|>)", std::regex_constants::icase));

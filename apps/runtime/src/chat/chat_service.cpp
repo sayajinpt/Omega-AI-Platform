@@ -348,7 +348,7 @@ std::vector<ToolCall> safe_parse_tool_calls(const std::string& text) {
 
 bool assistant_text_looks_like_tool_attempt(const std::string& text) {
   static const std::regex hints(
-      R"((```\s*tool\b|<\|tool_call>|<tool_call|\"write_file\"|\"content_create_run\"|\bwrite_file\b|\bcontent_create_run\b))",
+      R"((```\s*tool\b|<\|tool_call>|<tool_call|<longcat_tool_call|\"write_file\"|\"content_create_run\"|\bwrite_file\b|\bcontent_create_run\b))",
       std::regex_constants::icase);
   return std::regex_search(text, hints);
 }
