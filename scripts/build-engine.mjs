@@ -16,7 +16,7 @@ import {
   engineBuildCacheKey
 } from './lib/engine-gpu-backend.mjs'
 import { applyVulkanSdkToEnv } from './lib/vulkan-detect.mjs'
-import { resolveEngineBuildDir, noteEngineBuildDir } from './lib/engine-build-dir.mjs'
+import { resolveEngineBuildDir, noteEngineBuildDir, invalidateEngineBuildCacheIfSourceMoved } from './lib/engine-build-dir.mjs'
 import { stripDuplicateCudaRuntimeFromEngine, isCudaRuntimeDll, ensureCudaRuntimeInEngine } from './lib/cuda-runtime-shared.mjs'
 import { stageVcRuntimeToDirs } from './lib/stage-vc-runtime.mjs'
 
@@ -184,7 +184,7 @@ function runCmakeBuild(buildDir, gpu, env) {
   if (/\\Desktop\\|\\OneDrive\\/i.test(root)) {
     console.warn(
       '[build-engine] Project is under Desktop or OneDrive — cloud sync can lock build files. ' +
-        'Vulkan builds use a short path under %LOCALAPPDATA%\\O\\eb to avoid Windows MAX_PATH.'
+        'Vulkan builds use a short path under %LOCALAPPDATA%\\O\\eb-<repo-id> to avoid Windows MAX_PATH.'
     )
   }
   const cmd = `${cmake} --build "${buildDir}"${parallelArg}`.trim()
@@ -255,6 +255,7 @@ function applyCudaRuntimeSharing() {
   }
 }
 
+invalidateEngineBuildCacheIfSourceMoved(root, buildDir)
 invalidateEngineBuildCacheIfBackendChanged(gpu)
 if (buildDirMeta.short) {
   console.log(`[build-engine] build dir: ${buildDir} (${buildDirMeta.reason})`)

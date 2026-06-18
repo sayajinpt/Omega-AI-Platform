@@ -79,6 +79,21 @@ if ($doLink) {
 }
 
 Write-Host ('[build-engine] configuring ' + $BuildDir)
+
+$cacheFile = Join-Path $BuildDir "CMakeCache.txt"
+if (Test-Path $cacheFile) {
+  $engineDirNorm = (Resolve-Path $EngineDir).Path.ToLower().Replace('/', '\')
+  $cacheText = Get-Content $cacheFile -Raw
+  if ($cacheText -match 'CMAKE_HOME_DIRECTORY:INTERNAL=([^\r\n]+)') {
+    $cached = $Matches[1].Trim().ToLower().Replace('/', '\')
+    if ($cached -ne $engineDirNorm) {
+      Write-Host "[build-engine] CMake cache is from a different folder — clearing"
+      Remove-Item $cacheFile -Force
+      Remove-Item (Join-Path $BuildDir ".omega-gpu-backend") -Force -ErrorAction SilentlyContinue
+    }
+  }
+}
+
 & $cmake @cmakeArgs
 if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 
