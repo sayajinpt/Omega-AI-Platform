@@ -22,7 +22,7 @@ quality of chat, content, etc.. are limited by the models u use.
 Fork it , build on it, make your own improved version. thats the point of all of this.
 
 
-**Omega v2** ships as a **native desktop app** (WebView2 / WKWebView / WebKitGTK) with a **C++ runtime** — no Electron at install time. See [docs/OMEGA-V2.md](docs/OMEGA-V2.md).
+**Omega v2** ships as a **native desktop app** (WebView2 / WKWebView / WebKitGTK) with a **C++ runtime**. See [docs/OMEGA-V2.md](docs/OMEGA-V2.md).
 
 
 Now u have the core engine "llama.cpp + the easy use UI of lmstudio + ollama backend for ollama especific model formats, servers,etc.. + Hermes style agent already native + CloakBrowser for native browsing and automation in protected services and websides"
