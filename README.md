@@ -144,6 +144,9 @@ License: [Apache-2.0](LICENSE)
 
 <img width="1833" height="1291" alt="Captura de ecrã 2026-06-18 161305" src="https://github.com/user-attachments/assets/d058d03e-9fd7-46bc-a465-bdb8f11e314a" />
 
+<img width="1671" height="997" alt="Captura de ecrã 2026-06-10 211458" src="https://github.com/user-attachments/assets/f58195b3-5ab8-47e3-b0e4-253e6f8a8837" />
+
+
 
 
 
