@@ -10,6 +10,7 @@ import os from 'node:os'
 import { resolveCmakePath } from './lib/find-cmake.mjs'
 import { ensureCudaRuntimeInEngine } from './lib/cuda-runtime-shared.mjs'
 import { stageVcRuntimeToDirs } from './lib/stage-vc-runtime.mjs'
+import { invalidateCmakeCacheIfSourceMoved } from './lib/cmake-cache.mjs'
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..')
 const shellDir = join(root, 'apps', 'shell')
@@ -73,6 +74,8 @@ if (!cmake) {
 
 mkdirSync(outDir, { recursive: true })
 mkdirSync(buildDir, { recursive: true })
+
+invalidateCmakeCacheIfSourceMoved(shellDir, buildDir, 'build-desktop-shell')
 
 const cmakeArgs = ['-S', shellDir, '-B', buildDir, '-DCMAKE_BUILD_TYPE=Release']
 if (isWin) cmakeArgs.push('-A', 'x64')

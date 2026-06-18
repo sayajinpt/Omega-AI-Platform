@@ -344,7 +344,8 @@ User data: `OMEGA_HOME` or `~/.omega` — models, sessions, plugins, staged medi
 
 | Guide | Contents |
 |-------|----------|
-| [docs/OMEGA-V2.md](docs/OMEGA-V2.md) | **v2 stack** — ports, layout, build outputs |
+| [docs/BUILDING-FROM-SOURCE.md](docs/BUILDING-FROM-SOURCE.md) | **Build on any machine** — requirements, paths, troubleshooting |
+| [docs/OMEGA-V2.md](docs/OMEGA-V2.md) | v2 stack — ports, layout, build outputs |
 | [docs/FEATURES.md](docs/FEATURES.md) | Feature checklist |
 | [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | Process model and subsystems |
 | [docs/PLATFORM-SHELLS.md](docs/PLATFORM-SHELLS.md) | WebView2 / macOS / Linux shells |

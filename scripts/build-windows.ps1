@@ -96,6 +96,18 @@ if (-not (Test-OmegaWorkspaceLayout)) {
   exit 1
 }
 
+Write-OmegaLog -Level info -Message "Validating build scripts (PowerShell parse check)"
+$validateOut = @(node scripts/validate-build-scripts.mjs 2>&1)
+$validateCode = $LASTEXITCODE
+$validateOut | ForEach-Object { Write-Host $_; Add-Content -Path $logFile -Value $_ -Encoding utf8 }
+if ($validateCode -ne 0) {
+  Write-OmegaFail
+  Write-OmegaLog -Level err -Message "Build script validation failed (exit $validateCode)"
+  Read-Host "Press Enter to close"
+  Pop-Location
+  exit $validateCode
+}
+
 $totalSteps = 4
 
 Write-OmegaStep -Current 1 -Total $totalSteps -Label "Clean npm trees (fresh workspace install)"

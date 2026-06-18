@@ -1,6 +1,20 @@
+#!/usr/bin/env node
+/**
+ * Dev-only: verify GGUF tensor offset in a local model file.
+ * Usage: node scripts/verify-gguf-offset.mjs [path-to.gguf]
+ */
 import { open } from 'node:fs/promises'
+import { homedir } from 'node:os'
+import { join } from 'node:path'
 
-const p = 'C:/Users/birdy/.omega/models/Qwen_Qwen3-8B-GGUF/Qwen_Qwen3-8B-Q4_K_M.gguf'
+const defaultModel = join(
+  homedir(),
+  '.omega',
+  'models',
+  'Qwen_Qwen3-8B-GGUF',
+  'Qwen_Qwen3-8B-Q4_K_M.gguf'
+)
+const p = process.argv[2]?.trim() || process.env.OMEGA_TEST_GGUF || defaultModel
 const fh = await open(p, 'r')
 
 let off = 0
@@ -38,6 +52,8 @@ async function skipVal(t) {
   }
   throw new Error(`skip ${t}`)
 }
+
+console.log('GGUF:', p)
 
 await read(4) // magic
 const ver = await u32()

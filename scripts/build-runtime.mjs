@@ -8,6 +8,7 @@ import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { resolveCmakePath } from './lib/find-cmake.mjs'
 import { stageVcRuntimeToDirs } from './lib/stage-vc-runtime.mjs'
+import { invalidateCmakeCacheIfSourceMoved } from './lib/cmake-cache.mjs'
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..')
 const runtimeDir = join(root, 'apps', 'runtime')
@@ -57,6 +58,8 @@ if (!cmake) {
 
 mkdirSync(outDir, { recursive: true })
 mkdirSync(buildDir, { recursive: true })
+
+invalidateCmakeCacheIfSourceMoved(runtimeDir, buildDir, 'build-runtime')
 
 execSync('node scripts/generate-route-catalog.mjs', { cwd: root, stdio: 'inherit' })
 execSync('node scripts/generate-tool-catalog.mjs', { cwd: root, stdio: 'inherit' })

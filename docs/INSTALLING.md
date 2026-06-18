@@ -55,7 +55,7 @@ Building from source (not needed for end users):
 
 The build scripts prompt for llama.cpp release, prebuilt vs source inference binaries, and NVIDIA CUDA vs Vulkan. Requires Node.js 20+, Git, Python 3.10+, and a C++ toolchain (CMake / Visual Studio Build Tools) on PATH. Linux also needs `unzip` and build tools. First build downloads Claw3D and engine binaries — allow time and network.
 
-Details: [BUILDING-LLAMA-VARIANTS.md](./BUILDING-LLAMA-VARIANTS.md) · v2 overview: [OMEGA-V2.md](./OMEGA-V2.md).
+Details: [BUILDING-FROM-SOURCE.md](./BUILDING-FROM-SOURCE.md) · [BUILDING-LLAMA-VARIANTS.md](./BUILDING-LLAMA-VARIANTS.md) · v2 overview: [OMEGA-V2.md](./OMEGA-V2.md).
 
 Output: `dist/native/` (`Omega-*-Setup.exe`, AppImage, or `.dmg`)  
 Log: `build-log.txt`

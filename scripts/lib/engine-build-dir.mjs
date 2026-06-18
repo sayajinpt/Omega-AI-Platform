@@ -3,17 +3,17 @@
  * Vulkan (ggml-vulkan) uses ExternalProject paths that exceed MAX_PATH under long repo roots.
  */
 import { createHash } from 'node:crypto'
-import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
+import { existsSync, mkdirSync, writeFileSync } from 'node:fs'
 import { homedir } from 'node:os'
-import { join, resolve } from 'node:path'
+import { join } from 'node:path'
+import {
+  normalizePath,
+  invalidateCmakeCacheIfSourceMoved,
+  pruneLegacySharedEngineBuildCache
+} from './cmake-cache.mjs'
 
 const NESTED_VULKAN_SUFFIX =
   '\\omega_infer_build\\llama_cpp_build\\ggml\\src\\ggml-vulkan\\vulkan-shaders-gen-prefix\\src\\vulkan-shaders-gen-build\\CMakeFiles\\CMakeScratch\\TryCompile-stub\\cmTC_stub.dir\\Debug\\cmTC_stub.tlog\\link.write.1.tlog'
-
-/** @param {string} p */
-function normalizePath(p) {
-  return resolve(p).replace(/\//g, '\\').toLowerCase()
-}
 
 /** Stable short id so each clone gets its own short build dir under %LOCALAPPDATA%\\O\\. */
 export function engineBuildDirRepoId(root) {
@@ -66,35 +66,18 @@ export function engineBuildDirStampPath(buildDir) {
 }
 
 /**
- * @param {string} buildDir
- * @returns {string | null}
- */
-export function cmakeCacheSourceRoot(buildDir) {
-  const cachePath = join(buildDir, 'CMakeCache.txt')
-  if (!existsSync(cachePath)) return null
-  const text = readFileSync(cachePath, 'utf8')
-  const m = text.match(/(?:^|\n)CMAKE_HOME_DIRECTORY:INTERNAL=([^\n]+)/m)
-  return m ? normalizePath(m[1]) : null
-}
-
-/**
- * Drop stale CMake cache when the repo was moved or cloned to a new folder.
  * @param {string} root repo root
  * @param {string} buildDir
- * @returns {boolean} true if cache was cleared
+ * @returns {boolean}
  */
 export function invalidateEngineBuildCacheIfSourceMoved(root, buildDir) {
-  const cached = cmakeCacheSourceRoot(buildDir)
-  if (!cached) return false
-  const current = normalizePath(join(root, 'apps', 'engine'))
-  if (cached === current) return false
-  console.log(
-    `[build-engine] CMake cache is from a different folder (${cached}) — clearing for ${current}`
+  pruneLegacySharedEngineBuildCache()
+  return invalidateCmakeCacheIfSourceMoved(
+    join(root, 'apps', 'engine'),
+    buildDir,
+    'build-engine',
+    ['.omega-build-dir', '.omega-gpu-backend']
   )
-  rmSync(join(buildDir, 'CMakeCache.txt'), { force: true })
-  rmSync(engineBuildDirStampPath(buildDir), { force: true })
-  rmSync(join(buildDir, '.omega-gpu-backend'), { force: true })
-  return true
 }
 
 /**
@@ -110,3 +93,5 @@ export function noteEngineBuildDir(root, buildDir, meta) {
     'utf8'
   )
 }
+
+export { normalizePath } from './cmake-cache.mjs'

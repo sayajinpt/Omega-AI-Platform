@@ -1,18 +1,19 @@
 import { describe, it } from 'node:test'
 import assert from 'node:assert/strict'
 import { join } from 'node:path'
+import { mkdirSync, writeFileSync, rmSync } from 'node:fs'
+import { tmpdir } from 'node:os'
 import {
   resolveEngineBuildDir,
   engineBuildDirRepoId,
   invalidateEngineBuildCacheIfSourceMoved
 } from './engine-build-dir.mjs'
-import { mkdirSync, writeFileSync, rmSync } from 'node:fs'
-import { tmpdir } from 'node:os'
+import { invalidateCmakeCacheIfSourceMoved } from './cmake-cache.mjs'
 
 describe('resolveEngineBuildDir', () => {
   it('uses a short path for Vulkan on long Windows repo roots', () => {
     if (process.platform !== 'win32') return
-    const root = 'C:\\Users\\birdy\\Desktop\\project_Omega\\Omega'
+    const root = 'C:\\Users\\dev\\Desktop\\project_Omega\\Omega'
     const hit = resolveEngineBuildDir(root, { enableVulkan: true })
     assert.notEqual(hit.dir, join(root, 'apps', 'engine', 'build'))
     assert.match(hit.dir, /AppData\\Local\\O\\eb-[a-f0-9]{8}$/i)
@@ -21,7 +22,7 @@ describe('resolveEngineBuildDir', () => {
 
   it('uses a short path for Downloads clones', () => {
     if (process.platform !== 'win32') return
-    const root = 'C:\\Users\\birdy\\Downloads\\Omega-AI-Platform-main\\Omega-AI-Platform-main'
+    const root = 'C:\\Users\\dev\\Downloads\\Omega-AI-Platform-main\\Omega-AI-Platform-main'
     const hit = resolveEngineBuildDir(root, { enableCuda: true })
     assert.match(hit.dir, /AppData\\Local\\O\\eb-[a-f0-9]{8}$/i)
     assert.equal(hit.short, true)
@@ -47,9 +48,25 @@ describe('resolveEngineBuildDir', () => {
   })
 })
 
-describe('invalidateEngineBuildCacheIfSourceMoved', () => {
+describe('invalidateCmakeCacheIfSourceMoved', () => {
   it('clears CMake cache when source path changed', () => {
     const buildDir = join(tmpdir(), `omega-eb-test-${Date.now()}`)
+    mkdirSync(buildDir, { recursive: true })
+    writeFileSync(
+      join(buildDir, 'CMakeCache.txt'),
+      'CMAKE_HOME_DIRECTORY:INTERNAL=C:/old/path/Omega/apps/engine\n',
+      'utf8'
+    )
+    const sourceDir = join(tmpdir(), 'omega-engine-src')
+    const cleared = invalidateCmakeCacheIfSourceMoved(sourceDir, buildDir, 'test')
+    assert.equal(cleared, true)
+    rmSync(buildDir, { recursive: true, force: true })
+  })
+})
+
+describe('invalidateEngineBuildCacheIfSourceMoved', () => {
+  it('clears engine cache via apps/engine path', () => {
+    const buildDir = join(tmpdir(), `omega-eb-test2-${Date.now()}`)
     mkdirSync(buildDir, { recursive: true })
     writeFileSync(
       join(buildDir, 'CMakeCache.txt'),
