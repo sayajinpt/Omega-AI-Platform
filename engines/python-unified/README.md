@@ -33,6 +33,3 @@ Legacy `run-setup.mjs` is deprecated; use the API or pip commands above.
 | `content` | + Content Studio `requirements-omega.txt` (no torch media by default) |
 | `full` | base + sidecar + content + `requirements-local-media.txt` |
 
-## Migration
-
-Phase 6 complete: all Python features share `~/.omega/venvs/unified`. Legacy per-feature venvs are no longer created by the runtime.
