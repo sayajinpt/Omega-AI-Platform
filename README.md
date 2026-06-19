@@ -259,8 +259,6 @@ type or use the mic button.
 
 Messages go to whatever chat you already have open in the main window (or the last one you used).
 
-There is no separate Companion-only thread.
-
 - Screen snip (⧉):
 
 drag a rectangle, then save the image or send it into the active chat.
@@ -289,7 +287,7 @@ Filesystem, sandboxed JS/Python, optional shell and web fetch, plus plugins unde
 
 **Office & gateways :
 
-Native workforce floor; optional [Claw3D](https://github.com/iamlukethedev/claw3d) 3D office (off until you start it).
+ [Claw3D](https://github.com/iamlukethedev/claw3d) 3D office (off until you start it).
 
 Chat bridges for Telegram, Discord, Slack, Matrix, email, and others. [docs/OFFICE-AND-INTEGRATIONS.md](docs/OFFICE-AND-INTEGRATIONS.md).
 
