@@ -361,7 +361,6 @@ export function ModelsPage({
   }
 
   const runSearch = async (opts?: {
-    allowEmpty?: boolean
     pipeline?: string
     format?: typeof searchFormat
   }) => {
@@ -370,29 +369,6 @@ export function ModelsPage({
     let format = opts?.format ?? searchFormat
     if (pipeline.trim() && pipelinePrefersAnyFormat(pipeline) && format === 'gguf') {
       format = 'any'
-    }
-    const canBrowseVerifiedCurated =
-      format === 'gguf' && searchVerified && !searchAuthor.trim() && !pipeline.trim()
-    const canBrowseWide =
-      !q &&
-      !searchAuthor.trim() &&
-      !searchTag.trim() &&
-      format === 'gguf' &&
-      !searchVerified &&
-      !pipeline.trim()
-    if (
-      !opts?.allowEmpty &&
-      !q &&
-      !searchAuthor.trim() &&
-      !searchTag.trim() &&
-      !pipeline.trim() &&
-      !canBrowseVerifiedCurated &&
-      !canBrowseWide
-    ) {
-      alert(
-        'Enter a search term, author, tag, or task — or leave the query empty to browse popular GGUF models on Hugging Face.'
-      )
-      return
     }
     setSearching(true)
     try {
@@ -421,7 +397,7 @@ export function ModelsPage({
     if (pipelinePrefersAnyFormat(pipeline) && searchFormat === 'gguf') {
       setSearchFormat('any')
     }
-    void runSearch({ allowEmpty: true, pipeline, format: pipelinePrefersAnyFormat(pipeline) ? 'any' : searchFormat })
+    void runSearch({ pipeline, format: pipelinePrefersAnyFormat(pipeline) ? 'any' : searchFormat })
   }
 
   const openRepoCard = async (repoId: string) => {
@@ -455,7 +431,7 @@ export function ModelsPage({
   useEffect(() => {
     if (tab !== 'search' || searchBootstrapped) return
     setSearchBootstrapped(true)
-    void runSearch({ allowEmpty: true })
+    void runSearch()
     // eslint-disable-next-line react-hooks/exhaustive-deps -- bootstrap HF browse when tab first opened
   }, [tab, searchBootstrapped])
 
