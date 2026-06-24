@@ -1,4 +1,5 @@
 import { Slider } from './Slider'
+import { HF_PIPELINE_TASKS, formatPipelineLabel } from '@omega/sdk'
 import {
   CONTEXT_K_MAX,
   DOWNLOADS_MAX,
@@ -38,7 +39,8 @@ export function ModelSearchFiltersPanel({
   onReset,
   pipelineOptions,
   showFileSize = true,
-  showQuant = false
+  showQuant = false,
+  onPipelineChange
 }: {
   filters: ModelSearchFilterState
   onChange: (next: ModelSearchFilterState) => void
@@ -46,6 +48,8 @@ export function ModelSearchFiltersPanel({
   pipelineOptions?: string[]
   showFileSize?: boolean
   showQuant?: boolean
+  /** When set, called after task/pipeline filter changes (e.g. re-run HF search). */
+  onPipelineChange?: (pipeline: string) => void
 }) {
   const active = filtersAreActive(filters)
   const patch = (partial: Partial<ModelSearchFilterState>) => onChange({ ...filters, ...partial })
@@ -181,20 +185,30 @@ export function ModelSearchFiltersPanel({
         )}
 
         <div className="flex flex-wrap gap-2">
-          {pipelineOptions && pipelineOptions.length > 0 && (
-            <select
-              value={filters.pipeline}
-              onChange={(e) => patch({ pipeline: e.target.value })}
-              className="rounded-lg border border-zinc-700 bg-zinc-950 px-2 py-1.5 text-xs"
-            >
-              <option value="">Any pipeline</option>
-              {pipelineOptions.map((p) => (
+          <select
+            value={filters.pipeline}
+            onChange={(e) => {
+              const pipeline = e.target.value
+              onChange({ ...filters, pipeline })
+              onPipelineChange?.(pipeline)
+            }}
+            className="min-w-[10rem] rounded-lg border border-zinc-700 bg-zinc-950 px-2 py-1.5 text-xs"
+            title="Hugging Face task (pipeline_tag)"
+          >
+            <option value="">Any task</option>
+            {HF_PIPELINE_TASKS.map((t) => (
+              <option key={t.id} value={t.id}>
+                {t.label}
+              </option>
+            ))}
+            {pipelineOptions
+              ?.filter((p) => !HF_PIPELINE_TASKS.some((t) => t.id === p))
+              .map((p) => (
                 <option key={p} value={p}>
-                  {p}
+                  {formatPipelineLabel(p)}
                 </option>
               ))}
-            </select>
-          )}
+          </select>
           {showQuant && (
             <select
               value={filters.quant}
@@ -220,8 +234,8 @@ export function ModelSearchFiltersPanel({
           )}
         </div>
         <p className="text-[10px] text-zinc-600">
-          Parameter and context limits use heuristics from repo names and HF tags. Models without
-          a detectable value are hidden when a min bound is set.
+          Task filter uses Hugging Face <span className="font-mono">pipeline_tag</span> (same as the
+          Hub Tasks list). Parameter and context limits use heuristics from repo names and tags.
         </p>
       </div>
     </details>

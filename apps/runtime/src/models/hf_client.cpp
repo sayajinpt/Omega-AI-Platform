@@ -117,14 +117,34 @@ json HfClient::search(const json& opts) const {
   const json o = opts.is_object() ? opts : json::object();
   const std::string query = o.value("query", "");
   const std::string author = o.value("author", "");
+  const std::string tag = o.value("tag", "");
+  const std::string pipeline_tag =
+      o.contains("pipelineTag") && o["pipelineTag"].is_string()
+          ? o["pipelineTag"].get<std::string>()
+          : o.value("pipeline_tag", o.value("pipeline", ""));
   const std::string sort = o.value("sort", "trending");
   const int limit = o.value("limit", 60);
+  const std::string fmt = o.value("format", "");
+  const bool fmt_any = fmt == "any";
+  const bool fmt_gguf = fmt == "gguf" || (fmt.empty() && o.value("ggufOnly", false));
+  const bool default_gguf_browse =
+      pipeline_tag.empty() && tag.empty() && query.empty() && author.empty() && fmt.empty();
+  const bool use_gguf =
+      !fmt_any && (fmt_gguf || (fmt.empty() && default_gguf_browse && !o.contains("ggufOnly")));
+
   std::ostringstream path;
   path << "/api/models?";
   if (!query.empty()) path << "search=" << url_encode(query) << '&';
   if (!author.empty()) path << "author=" << url_encode(author) << '&';
-  const std::string fmt = o.value("format", o.value("ggufOnly", true) ? "gguf" : "any");
-  if (fmt == "gguf") path << "filter=gguf&";
+  if (!pipeline_tag.empty()) path << "pipeline_tag=" << url_encode(pipeline_tag) << '&';
+  if (!tag.empty()) path << "other=" << url_encode(tag) << '&';
+  if (use_gguf) {
+    path << "filter=gguf&";
+  } else if (fmt == "onnx") {
+    path << "library=onnx&";
+  } else if (fmt == "safetensors" || fmt == "awq" || fmt == "gptq") {
+    path << "library=safetensors&";
+  }
   path << "sort=" << (sort == "trending" ? "trendingScore" : sort) << "&direction=-1&limit="
        << std::min(std::max(limit, 1), 100) << "&full=true";
 

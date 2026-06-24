@@ -8,7 +8,7 @@ import type {
   ModelConfig,
   ModelInfo
 } from '@omega/sdk'
-import { buildHfSearchOptions } from '@omega/sdk'
+import { buildHfSearchOptions, HF_PIPELINE_TASKS, pipelinePrefersAnyFormat } from '@omega/sdk'
 import { Toggle } from '../components/Slider'
 import { MODEL_HUB } from '../data/model-hub'
 import { parseHfRepoInput } from '../lib/hf-repo-input'
@@ -360,22 +360,37 @@ export function ModelsPage({
     }
   }
 
-  const runSearch = async (opts?: { allowEmpty?: boolean }) => {
+  const runSearch = async (opts?: {
+    allowEmpty?: boolean
+    pipeline?: string
+    format?: typeof searchFormat
+  }) => {
     const q = searchQ.trim()
+    const pipeline = opts?.pipeline ?? searchFilters.pipeline
+    let format = opts?.format ?? searchFormat
+    if (pipeline.trim() && pipelinePrefersAnyFormat(pipeline) && format === 'gguf') {
+      format = 'any'
+    }
     const canBrowseVerifiedCurated =
-      searchFormat === 'gguf' && searchVerified && !searchAuthor.trim()
+      format === 'gguf' && searchVerified && !searchAuthor.trim() && !pipeline.trim()
     const canBrowseWide =
-      !q && !searchAuthor.trim() && !searchTag.trim() && searchFormat === 'gguf' && !searchVerified
+      !q &&
+      !searchAuthor.trim() &&
+      !searchTag.trim() &&
+      format === 'gguf' &&
+      !searchVerified &&
+      !pipeline.trim()
     if (
       !opts?.allowEmpty &&
       !q &&
       !searchAuthor.trim() &&
       !searchTag.trim() &&
+      !pipeline.trim() &&
       !canBrowseVerifiedCurated &&
       !canBrowseWide
     ) {
       alert(
-        'Enter a search term, author, or tag — or leave the query empty to browse popular GGUF models on Hugging Face.'
+        'Enter a search term, author, tag, or task — or leave the query empty to browse popular GGUF models on Hugging Face.'
       )
       return
     }
@@ -387,9 +402,10 @@ export function ModelsPage({
             query: q || undefined,
             author: searchAuthor || undefined,
             tag: searchTag || undefined,
+            pipeline: pipeline.trim() || undefined,
             sort: searchSort,
             limit: searchLimit,
-            format: searchFormat,
+            format,
             preferVerifiedQuantizers: searchVerified
           })
         )
@@ -399,6 +415,13 @@ export function ModelsPage({
     } finally {
       setSearching(false)
     }
+  }
+
+  const onPipelineFilterChange = (pipeline: string) => {
+    if (pipelinePrefersAnyFormat(pipeline) && searchFormat === 'gguf') {
+      setSearchFormat('any')
+    }
+    void runSearch({ allowEmpty: true, pipeline, format: pipelinePrefersAnyFormat(pipeline) ? 'any' : searchFormat })
   }
 
   const openRepoCard = async (repoId: string) => {
@@ -582,9 +605,30 @@ export function ModelsPage({
                   onChange={setSearchFilters}
                   onReset={() => setSearchFilters(defaultModelSearchFilters())}
                   pipelineOptions={pipelineOptions}
+                  onPipelineChange={onPipelineFilterChange}
                   showFileSize
                   showQuant={searchFormat === 'gguf'}
                 />
+                <div className="flex flex-wrap gap-1.5">
+                  {HF_PIPELINE_TASKS.slice(0, 12).map((task) => (
+                    <button
+                      key={task.id}
+                      type="button"
+                      onClick={() => {
+                        const next = searchFilters.pipeline === task.id ? '' : task.id
+                        setSearchFilters((f) => ({ ...f, pipeline: next }))
+                        onPipelineFilterChange(next)
+                      }}
+                      className={`rounded-full px-2.5 py-1 text-[10px] ring-1 transition ${
+                        searchFilters.pipeline === task.id
+                          ? 'bg-indigo-600 text-white ring-indigo-500'
+                          : 'bg-zinc-900 text-zinc-400 ring-zinc-700 hover:text-zinc-200'
+                      }`}
+                    >
+                      {task.label}
+                    </button>
+                  ))}
+                </div>
                 <div className="flex flex-wrap gap-2">
                   <input
                     value={searchAuthor}

@@ -923,6 +923,8 @@ export interface HFSearchOptions {
   limit?: number
   /** Weight format filter; 'any' = no format constraint. */
   format?: WeightFormat | 'any'
+  /** Hugging Face pipeline_tag (official task), e.g. text-to-video. */
+  pipelineTag?: string
   /** Backwards-compat alias for { format: 'gguf' }. */
   ggufOnly?: boolean
   /**
@@ -1786,6 +1788,7 @@ export * from './load-progress.js'
 export * from './model-id.js'
 export * from './model-capabilities.js'
 export * from './model-file-bundle.js'
+export * from './hf-pipeline-tasks.js'
 export * from './hf-search.js'
 export * from './hf-search-filters.js'
 export * from './hf-file-size.js'
