@@ -7,10 +7,13 @@ import { copyFileSync, cpSync, existsSync, mkdirSync, rmSync } from 'node:fs'
 import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import os from 'node:os'
-import { resolveCmakePath } from './lib/find-cmake.mjs'
+import { resolveCmakePath, resolveWindowsCmakeConfigureArgs } from './lib/find-cmake.mjs'
 import { ensureCudaRuntimeInEngine } from './lib/cuda-runtime-shared.mjs'
 import { stageVcRuntimeToDirs } from './lib/stage-vc-runtime.mjs'
-import { invalidateCmakeCacheIfSourceMoved } from './lib/cmake-cache.mjs'
+import {
+  clearIncompatibleWindowsCmakeCache,
+  invalidateCmakeCacheIfSourceMoved
+} from './lib/cmake-cache.mjs'
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..')
 const shellDir = join(root, 'apps', 'shell')
@@ -76,20 +79,33 @@ mkdirSync(outDir, { recursive: true })
 mkdirSync(buildDir, { recursive: true })
 
 invalidateCmakeCacheIfSourceMoved(shellDir, buildDir, 'build-desktop-shell')
+clearIncompatibleWindowsCmakeCache(buildDir)
 
-const cmakeArgs = ['-S', shellDir, '-B', buildDir, '-DCMAKE_BUILD_TYPE=Release']
-if (isWin) cmakeArgs.push('-A', 'x64')
+const cmakeArgs = ['-S', shellDir, '-B', buildDir, '-DCMAKE_BUILD_TYPE=Release', ...resolveWindowsCmakeConfigureArgs()]
 console.log('[build-desktop-shell] configuring for', process.platform)
-execSync(`"${cmake}" ${cmakeArgs.map((a) => `"${a}"`).join(' ')}`, {
-  cwd: root,
-  stdio: 'inherit',
-  shell: true
-})
+try {
+  execSync(`"${cmake}" ${cmakeArgs.map((a) => `"${a}"`).join(' ')}`, {
+    cwd: root,
+    stdio: 'inherit',
+    shell: true
+  })
 
-const buildCmd = isWin
-  ? `"${cmake}" --build "${buildDir}" --config Release`
-  : `"${cmake}" --build "${buildDir}" --config Release -j ${Math.max(2, os.cpus().length)}`
-execSync(buildCmd, { cwd: root, stdio: 'inherit', shell: true })
+  const buildCmd = isWin
+    ? `"${cmake}" --build "${buildDir}" --config Release`
+    : `"${cmake}" --build "${buildDir}" --config Release -j ${Math.max(2, os.cpus().length)}`
+  execSync(buildCmd, { cwd: root, stdio: 'inherit', shell: true })
+} catch (err) {
+  const shellOut = join(outDir, shellBinaryName())
+  if (isWin && existsSync(join(outDir, 'omega-desktop.exe'))) {
+    console.warn('[build-desktop-shell] rebuild failed — using existing dist/shell/omega-desktop.exe')
+    process.exit(0)
+  }
+  if (isMac && existsSync(shellOut)) {
+    console.warn('[build-desktop-shell] rebuild failed — using existing shell bundle')
+    process.exit(0)
+  }
+  throw err
+}
 
 const built = findBuiltBinary()
 if (!built) {

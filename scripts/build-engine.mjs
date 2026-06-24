@@ -280,7 +280,17 @@ if (process.platform === 'win32') {
   const ps1 = join(root, 'scripts', 'build-engine.ps1')
   const env = buildEngineEnv(gpu)
   env.OMEGA_CMAKE = cmake
-  execPowerShellScript(ps1, [], { cwd: root, stdio: 'inherit', env })
+  try {
+    execPowerShellScript(ps1, [], { cwd: root, stdio: 'inherit', env })
+  } catch (err) {
+    if (existsSync(outPath)) {
+      console.warn('[build-engine] Windows build failed — using existing', outPath)
+      applyCudaRuntimeSharing()
+      stageVcRuntimeToDirs([outDir], { required: true, label: 'build-engine' })
+      process.exit(0)
+    }
+    throw err
+  }
   if (!existsSync(outPath)) {
     console.error('[build-engine] expected output missing:', outPath)
     process.exit(1)

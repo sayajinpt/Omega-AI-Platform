@@ -4,6 +4,7 @@
 import { existsSync, readFileSync, rmSync } from 'node:fs'
 import { homedir } from 'node:os'
 import { join, resolve } from 'node:path'
+import { pathToFileURL } from 'node:url'
 
 /** @param {string} p */
 export function normalizePath(p) {
@@ -42,15 +43,21 @@ export function invalidateCmakeCacheIfSourceMoved(sourceDir, buildDir, label, ex
   return true
 }
 
-/** NMake caches break Windows `-A x64` / Visual Studio configures. */
+/** NMake / stale caches break Windows Visual Studio `-A x64` configures. */
 export function clearIncompatibleWindowsCmakeCache(buildDir) {
   if (process.platform !== 'win32') return false
   const cachePath = join(buildDir, 'CMakeCache.txt')
   if (!existsSync(cachePath)) return false
   const text = readFileSync(cachePath, 'utf8')
-  if (!/CMAKE_GENERATOR:INTERNAL=NMake Makefiles/m.test(text)) return false
-  console.log(`[cmake] clearing incompatible NMake cache in ${buildDir}`)
+  const needsClear =
+    /CMAKE_GENERATOR:INTERNAL=NMake Makefiles/m.test(text) ||
+    /CMAKE_GENERATOR:INTERNAL=MinGW Makefiles/m.test(text) ||
+    (/CMAKE_GENERATOR:INTERNAL=Visual Studio/m.test(text) &&
+      /CMAKE_GENERATOR_PLATFORM:INTERNAL=\s*$/m.test(text))
+  if (!needsClear) return false
+  console.log(`[cmake] clearing incompatible Windows CMake cache in ${buildDir}`)
   rmSync(cachePath, { force: true })
+  rmSync(join(buildDir, 'CMakeFiles'), { recursive: true, force: true })
   return true
 }
 
@@ -66,4 +73,13 @@ export function pruneLegacySharedEngineBuildCache() {
   rmSync(join(legacy, '.omega-gpu-backend'), { force: true })
   rmSync(join(legacy, '.omega-build-dir'), { force: true })
   return true
+}
+
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
+  if (process.argv.includes('--clear-nmake')) {
+    const dir = process.argv[process.argv.length - 1]
+    if (dir && !dir.startsWith('-') && dir !== process.argv[1]) {
+      clearIncompatibleWindowsCmakeCache(dir)
+    }
+  }
 }

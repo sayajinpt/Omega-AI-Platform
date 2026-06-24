@@ -4,6 +4,7 @@
 import { execSync } from 'node:child_process'
 import { existsSync } from 'node:fs'
 import { join } from 'node:path'
+import { pathToFileURL } from 'node:url'
 
 const VS_CMAKE_REL =
   'Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\CMake\\bin\\cmake.exe'
@@ -106,4 +107,10 @@ export function resolveWindowsCmakeConfigureArgs() {
     /* fall through */
   }
   return ['-A', 'x64']
+}
+
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
+  if (process.argv.includes('--windows-configure-args')) {
+    process.stdout.write(JSON.stringify(resolveWindowsCmakeConfigureArgs()))
+  }
 }

@@ -80,6 +80,9 @@ if ($doLink) {
 
 Write-Host ('[build-engine] configuring ' + $BuildDir)
 
+$node = if ($env:OMEGA_NODE -and (Test-Path $env:OMEGA_NODE)) { $env:OMEGA_NODE } else { "node" }
+& $node (Join-Path $PSScriptRoot "lib\cmake-cache.mjs") --clear-nmake $BuildDir | Out-Null
+
 $cacheFile = Join-Path $BuildDir "CMakeCache.txt"
 if (Test-Path $cacheFile) {
   $engineDirNorm = (Resolve-Path $EngineDir).Path.ToLower().Replace('/', '\')
@@ -92,6 +95,11 @@ if (Test-Path $cacheFile) {
       Remove-Item (Join-Path $BuildDir ".omega-gpu-backend") -Force -ErrorAction SilentlyContinue
     }
   }
+}
+
+$winGenJson = & $node (Join-Path $PSScriptRoot "lib\find-cmake.mjs") --windows-configure-args
+if ($LASTEXITCODE -eq 0 -and $winGenJson) {
+  $cmakeArgs += ($winGenJson | ConvertFrom-Json)
 }
 
 & $cmake @cmakeArgs
