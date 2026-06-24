@@ -181,6 +181,17 @@ if ($variant) {
 }
 Write-OmegaProgressBar -Percent 45
 
+# Load Visual Studio + CMake into this session so node build scripts (runtime, shell) find the same toolchain as build-engine.ps1.
+. (Join-Path $PSScriptRoot "lib-vs-tools.ps1")
+$omegaCmake = Get-VsCMake
+if ($omegaCmake) {
+  $env:OMEGA_CMAKE = $omegaCmake
+  Initialize-VsDevEnvironment -Arch amd64 | Out-Null
+  Write-OmegaLog -Level ok -Message "Native toolchain ready ($omegaCmake)"
+} else {
+  Write-OmegaLog -Level warn -Message "CMake not resolved before native build - omega-runtime rebuild may fail"
+}
+
 Write-OmegaStep -Current 4 -Total $totalSteps -Label "Full production build (Content Studio, Office, engines, installer)"
 Write-OmegaLog -Level info -Message "first run can take a long time (Claw3D clone + npm build)"
 Write-OmegaProgressBar -Percent 50

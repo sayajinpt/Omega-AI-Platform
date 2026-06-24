@@ -42,6 +42,18 @@ export function invalidateCmakeCacheIfSourceMoved(sourceDir, buildDir, label, ex
   return true
 }
 
+/** NMake caches break Windows `-A x64` / Visual Studio configures. */
+export function clearIncompatibleWindowsCmakeCache(buildDir) {
+  if (process.platform !== 'win32') return false
+  const cachePath = join(buildDir, 'CMakeCache.txt')
+  if (!existsSync(cachePath)) return false
+  const text = readFileSync(cachePath, 'utf8')
+  if (!/CMAKE_GENERATOR:INTERNAL=NMake Makefiles/m.test(text)) return false
+  console.log(`[cmake] clearing incompatible NMake cache in ${buildDir}`)
+  rmSync(cachePath, { force: true })
+  return true
+}
+
 /** Drop pre-v2 shared engine cache dir (%LOCALAPPDATA%\\O\\eb) so clones never collide. */
 export function pruneLegacySharedEngineBuildCache() {
   if (process.platform !== 'win32') return false
